@@ -5,117 +5,127 @@
 <title>Unified Golf Drill Library</title>
 <style>
 body { font-family: sans-serif; background:#f5f6fa; margin:0; padding:0; }
-header { display:flex; gap:20px; padding:20px; background:#192a56; color:white; align-items:center; flex-wrap:wrap;}
+header { display:flex; gap:20px; padding:20px; background:#192a56; color:white; align-items:center; flex-wrap:wrap; position:sticky; top:0; z-index:10;}
 header a.button { text-decoration:none; color:white; background:#40739e; padding:10px 15px; border-radius:5px; }
+header input { padding:10px; width:200px; border-radius:5px; border:1px solid #ccc; }
+header button { padding:10px 15px; border:none; border-radius:5px; cursor:pointer; background:#40739e; color:white; }
 h1 { text-align:center; color:#192a56; margin-top:20px; }
 h2 { margin-top:30px; color:#192a56; text-align:left; padding-left:20px; }
 .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; padding:20px; }
-.grid-item { text-align:center; background:#fff; padding:10px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1);}
-.grid-item img { width:200px; height:350px; object-fit:cover; cursor:pointer; border-radius:5px;}
-#searchBox { padding:10px; width:200px; border-radius:5px; border:1px solid #ccc; }
-button { padding:10px 15px; border:none; border-radius:5px; cursor:pointer; background:#40739e; color:white; }
+.grid-item { text-align:center; background:#fff; padding:10px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); position:relative; transition: transform 0.2s; }
+.grid-item img { width:200px; height:350px; object-fit:cover; cursor:pointer; border-radius:5px; }
+.grid-item:hover { transform: scale(1.05); box-shadow:0 6px 12px rgba(0,0,0,0.2);}
+.favorite-btn { position:absolute; top:5px; right:5px; background:#e84118; border:none; color:white; border-radius:50%; width:25px; height:25px; cursor:pointer; font-weight:bold;}
+.favorite-btn.favorited { background:#44bd32;}
 </style>
 </head>
 <body>
 
 <header>
-  <a class="button" href="office.html">Office</a>
-  <a class="button" href="stretching.html">Stretching</a>
+  <button id="showFavoritesBtn">Favorites</button>
   <input type="text" id="searchBox" placeholder="Search drills...">
-  <button id="favoritesBtn">Favorites</button>
 </header>
 
 <h1>Unified Golf Drill Library</h1>
 
-<!-- Drills Section -->
-<h2>Drills</h2>
+<h2 id="drills">Drills</h2>
 <div class="grid" id="drillsGrid"></div>
 
-<!-- Office Section -->
-<h2>Office Drills</h2>
+<h2 id="office">Office Drills</h2>
 <div class="grid" id="officeGrid"></div>
 
-<!-- Stretching Section -->
-<h2>Stretching</h2>
+<h2 id="stretching">Stretching</h2>
 <div class="grid" id="stretchingGrid"></div>
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
-  const drills = [
-    {name:"Grip Test", url:"https://youtube.com/shorts/FXCRiwjWSws?si=FdcLm6vqSz6EkAtk", img:"images/GripDrill.png"},
-    {name:"Grip Analysis", url:"https://www.facebook.com/share/r/15t9f6Hbrt/", img:"images/GripAnalysis.png"},
-    {name:"Keep Head Still Drill", url:"https://www.facebook.com/share/r/1H16ixiqbd/", img:"images/HeadStill.png"},
-    {name:"Weight Shift", url:"https://www.facebook.com/share/r/1BWfWbr27A/", img:"images/WeightShift.png"},
-    {name:"Impact Line", url:"https://www.facebook.com/share/r/19rd2YxiLU/", img:"images/ImpactLine.png"},
-    {name:"Doorframe Driver", url:"https://www.facebook.com/share/r/1CfVicRhRt/", img:"images/DoorframeDriver.png"},
-    {name:"Step Into It", url:"https://www.facebook.com/share/r/18UrLqCUyJ/", img:"images/StepIntoIt.png"},
-    {name:"Swing Step Drill", url:"https://www.facebook.com/share/v/1KoLfqLa2s/", img:"images/SwingStepDrill.png"},
-    {name:"Compression Step Drill", url:"https://www.facebook.com/share/r/1BN5YzNKsZ/", img:"images/CompressionStepDrill.png"},
-    {name:"Slow Down Swing Drill", url:"https://youtube.com/shorts/o72qLYgj8ug?si=QKy27epA_yOPhzG5", img:"images/SlowDown.png"},
-    {name:"Squash The Bug", url:"https://www.facebook.com/reel/1878055812806888", img:"images/SquashBug.png"},
-    {name:"Early Extension", url:"https://www.facebook.com/share/v/1ACeAhSnUg/", img:"images/EarlyExtension.png"},
-    {name:"Iron Drill", url:"https://www.instagram.com/reel/DHjqiGmThjw/?igsh=aDFhNjFmYTZsYnJ5", img:"images/IronDrill.png"},
-    {name:"Hands", url:"https://youtube.com/shorts/pBSMU1Og2Hc?si=a_nDBvVAS8DUABZm", img:"images/Hands.png"},
-    {name:"Shallow Club (Stick)", url:"https://www.facebook.com/share/r/16E2uBwfRm/", img:"images/ShallowClubStick.png"},
-    {name:"Over The Top (Stick)", url:"https://www.facebook.com/share/r/1XWTD8CxPK/", img:"images/OverTheTopStick.png"},
-    {name:"3 Drills (Stick)", url:"https://www.facebook.com/share/r/1AcLW4fm6i/", img:"images/3DrillsStick.png"},
-    {name:"Strike Drill (Sticks)", url:"https://www.facebook.com/share/r/1AGcZTJAhv/", img:"images/StrikeDrillSticks.png"},
-    {name:"Wedge Drill (Sticks)", url:"https://www.facebook.com/share/r/12LNrHuHebu/", img:"images/WedgeDrillSticks.png"},
-    {name:"One Hand Swing", url:"https://youtube.com/shorts/ircfhXoBUrg?si=xnUvIsCEmtkjpBgw", img:"images/OneHandSwing.png"},
-    {name:"Generate Power Drill", url:"https://youtube.com/shorts/lKmhCgld1W0?si=7XBrFgej2j5hf-dn", img:"images/GeneratePower.png"},
-    {name:"Drop Arms", url:"https://www.facebook.com/share/r/16JUHTPiGX/", img:"images/DropArms.png"},
-    {name:"Drop Arms Elbow", url:"https://youtube.com/shorts/QG0zJUPg2QI?si=YxpIk6Mj40-9Vb4w", img:"images/DropArmsElbow.png"},
-    {name:"Towel Drill", url:"https://www.instagram.com/reel/DJUD6arzaub/?igsh=MWtsN21uNzRqYnJxdA==", img:"images/TowelDrill.png"},
-    {name:"L to L Drill", url:"https://www.facebook.com/share/r/19xXuvJdbT/", img:"images/LtoLDrill.png"},
-    {name:"Sequencing Drill", url:"https://www.facebook.com/share/r/1ACeph1XQ4/", img:"images/SequencingDrill.png"},
-    {name:"Late Release Drill", url:"https://www.facebook.com/share/r/1FzNkygS8G/", img:"images/LateRelease.png"},
-    {name:"Follow Through", url:"https://www.facebook.com/share/r/17BksoZLXn/", img:"images/FollowThrough.png"},
-    {name:"Right Elbow", url:"https://www.facebook.com/share/r/15tGy4fr19/", img:"images/RightElbow.png"},
-    {name:"Punch Shot Drill", url:"https://www.facebook.com/share/v/16JZFy9RU6/", img:"images/PunchShotDrill.png"},
-    {name:"Chicken Wing", url:"https://www.facebook.com/share/r/17uamcRn4T/", img:"images/ChickenWing.png"},
-    {name:"Knee Drill", url:"https://www.facebook.com/share/r/16PbvKP9GT/", img:"images/KneeDrill.png"},
-    {name:"Hinge Club", url:"https://www.facebook.com/share/r/1846ropedK/", img:"images/HingeClub.png"},
-    {name:"Compression Ball Ahead Drill", url:"https://youtu.be/RTqa5CPu5Xo?t=208", img:"images/CompressionBallAhead.png"}
-  ];
+const drills = [
+  {name:"Grip Test", url:"https://youtube.com/shorts/FXCRiwjWSws?si=FdcLm6vqSz6EkAtk", img:"images/GripDrill.png"},
+  {name:"Grip Analysis", url:"https://www.facebook.com/share/r/15t9f6Hbrt/", img:"images/GripAnalysis.png"},
+  {name:"Keep Head Still Drill", url:"https://www.facebook.com/share/r/1H16ixiqbd/", img:"images/HeadStill.png"},
+  {name:"Weight Shift", url:"https://www.facebook.com/share/r/1BWfWbr27A/", img:"images/WeightShift.png"},
+  {name:"Impact Line", url:"https://www.facebook.com/share/r/19rd2YxiLU/", img:"images/ImpactLine.png"},
+  {name:"Doorframe Driver", url:"https://www.facebook.com/share/r/1CfVicRhRt/", img:"images/DoorframeDriver.png"},
+  {name:"Step Into It", url:"https://www.facebook.com/share/r/18UrLqCUyJ/", img:"images/StepIntoIt.png"},
+  {name:"Swing Step Drill", url:"https://www.facebook.com/share/v/1KoLfqLa2s/", img:"images/SwingStepDrill.png"},
+  {name:"Compression Step Drill", url:"https://www.facebook.com/share/r/1BN5YzNKsZ/", img:"images/CompressionStepDrill.png"},
+  {name:"Slow Down Swing Drill", url:"https://youtube.com/shorts/o72qLYgj8ug?si=QKy27epA_yOPhzG5", img:"images/SlowDown.png"},
+  {name:"Squash The Bug", url:"https://www.facebook.com/reel/1878055812806888", img:"images/SquashBug.png"},
+  {name:"Early Extension", url:"https://www.facebook.com/share/v/1ACeAhSnUg/", img:"images/EarlyExtension.png"},
+  {name:"Iron Drill", url:"https://www.instagram.com/reel/DHjqiGmThjw/?igsh=aDFhNjFmYTZsYnJ5", img:"images/IronDrill.png"},
+  {name:"Hands", url:"https://youtube.com/shorts/pBSMU1Og2Hc?si=a_nDBvVAS8DUABZm", img:"images/Hands.png"}
+];
 
-  const office = [
-    {name:"Left Knee", url:"https://youtube.com/shorts/q17LA-BlIrE?si=HQjBnOSWq2mwPGi2", img:"images/LeftKnee.png"},
-    {name:"Rotation Drill", url:"https://youtube.com/shorts/9BjYi4fHB9Y?si=ML5Cv_R3W1t_sNr4", img:"images/RotationOffice.png"},
-    {name:"Sway Fix", url:"https://www.facebook.com/share/r/1LjfWo8PER/", img:"images/SwayFix.png"},
-    {name:"Shallowing", url:"https://www.facebook.com/share/r/1CeA2a6T5y/", img:"images/ShallowingExercises.png"},
-    {name:"Backswing", url:"https://www.facebook.com/share/r/17Fpxu57XX/", img:"images/BackswingOffice.png"},
-    {name:"Compression Drill", url:"https://www.facebook.com/share/r/1KRRonHu2r/", img:"images/CompressionOffice.png"}
-  ];
+const office = [
+  {name:"Left Knee", url:"https://youtube.com/shorts/q17LA-BlIrE?si=HQjBnOSWq2mwPGi2", img:"images/LeftKnee.png"},
+  {name:"Rotation Drill", url:"https://youtube.com/shorts/9BjYi4fHB9Y?si=ML5Cv_R3W1t_sNr4", img:"images/RotationOffice.png"},
+  {name:"Sway Fix", url:"https://www.facebook.com/share/r/1LjfWo8PER/", img:"images/SwayFix.png"},
+  {name:"Shallowing", url:"https://www.facebook.com/share/r/1CeA2a6T5y/", img:"images/ShallowingExercises.png"},
+  {name:"Backswing", url:"https://www.facebook.com/share/r/17Fpxu57XX/", img:"images/BackswingOffice.png"},
+  {name:"Compression Drill", url:"https://www.facebook.com/share/r/1KRRonHu2r/", img:"images/CompressionOffice.png"}
+];
 
-  const stretching = [
-    {name:"Shoulder Injury", url:"https://www.facebook.com/share/r/1BifyXN4MN/", img:"images/ShoulderInjury.png"},
-    {name:"Hips", url:"https://www.facebook.com/share/r/17oRo2jBv8/", img:"images/HipStretching.png"},
-    {name:"Golf Stretching 3 Stretches", url:"https://www.facebook.com/share/r/18WVcACbnN/", img:"images/GolfStretching3.png"},
-    {name:"Golf Stretching 10 Minutes", url:"https://www.facebook.com/reel/3847933995513489", img:"images/GolfStretching10.png"},
-    {name:"Back Stretching", url:"https://www.facebook.com/share/r/1BMLcSx3di/", img:"images/BackStretching.png"},
-    {name:"Shoulders Stretching", url:"https://www.facebook.com/share/r/15MLkySBsb/", img:"images/ShoulderStretching.png"},
-    {name:"Elbows & Forearms Stretching", url:"https://www.facebook.com/share/r/1BjRCV1iaL/", img:"images/ElbowsForearms.png"},
-    {name:"Full Body Stretching", url:"https://www.facebook.com/reel/1422332818882057", img:"images/FullBody.png"},
-    {name:"Traps Stretching", url:"https://youtube.com/shorts/uNM9bQi2LW4?si=kz3W1rSnwH2w2lcG", img:"images/TrapsStretching.png"},
-    {name:"Neck Stretching", url:"https://youtube.com/shorts/VX8KKWT_lCc?si=hBvfHWIn-gxSJTVD", img:"images/NeckStretching.png"},
-    {name:"Shoulder Blade Stretching", url:"https://youtube.com/shorts/77Nqb7b-Ck4?si=SJbbwMEcnKbKsX7H", img:"images/ShoulderBlades.png"}
-  ];
+const stretching = [
+  {name:"Shoulder Injury", url:"https://www.facebook.com/share/r/1BifyXN4MN/", img:"images/ShoulderInjury.png"},
+  {name:"Hips", url:"https://www.facebook.com/share/r/17oRo2jBv8/", img:"images/HipStretching.png"},
+  {name:"Golf Stretching 3 Stretches", url:"https://www.facebook.com/share/r/18WVcACbnN/", img:"images/GolfStretching3.png"},
+  {name:"Golf Stretching 10 Minutes", url:"https://www.facebook.com/reel/3847933995513489", img:"images/GolfStretching10.png"}
+];
 
-  function renderGrid(gridId, items){
-    const grid = document.getElementById(gridId);
-    items.forEach(item => {
-      const div = document.createElement('div');
-      div.className = 'grid-item';
-      div.innerHTML = `<a href="${item.url}" target="_blank"><img src="${item.img}" alt="${item.name}"></a><p>${item.name}</p>`;
-      grid.appendChild(div);
+// Favorites
+let favorites = JSON.parse(localStorage.getItem("favorites") || "[]");
+
+// render grid with favorite buttons
+function renderGrid(gridId, items){
+  const grid = document.getElementById(gridId);
+  grid.innerHTML = "";
+  items.forEach(item => {
+    const div = document.createElement("div");
+    div.className = "grid-item";
+    div.innerHTML = `
+      <button class="favorite-btn ${favorites.includes(item.name) ? 'favorited' : ''}">&hearts;</button>
+      <a href="${item.url}" target="_blank"><img src="${item.img}" alt="${item.name}"></a>
+      <p>${item.name}</p>
+    `;
+    // favorite toggle
+    div.querySelector(".favorite-btn").addEventListener("click", e => {
+      e.stopPropagation();
+      if(favorites.includes(item.name)) {
+        favorites = favorites.filter(f => f !== item.name);
+      } else {
+        favorites.push(item.name);
+      }
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      renderAllGrids();
     });
-  }
+    grid.appendChild(div);
+  });
+}
 
-  renderGrid('drillsGrid', drills);
-  renderGrid('officeGrid', office);
-  renderGrid('stretchingGrid', stretching);
+function renderAllGrids() {
+  renderGrid("drillsGrid", drills);
+  renderGrid("officeGrid", office);
+  renderGrid("stretchingGrid", stretching);
+}
 
+renderAllGrids();
+
+// Search filter
+document.getElementById("searchBox").addEventListener("input", function(){
+  const query = this.value.toLowerCase();
+  function filterItems(items){ return items.filter(item => item.name.toLowerCase().includes(query)); }
+  renderGrid("drillsGrid", filterItems(drills));
+  renderGrid("officeGrid", filterItems(office));
+  renderGrid("stretchingGrid", filterItems(stretching));
+});
+
+// Favorites filter button
+document.getElementById("showFavoritesBtn").addEventListener("click", function(){
+  function filterFav(items){ return items.filter(item => favorites.includes(item.name)); }
+  renderGrid("drillsGrid", filterFav(drills));
+  renderGrid("officeGrid", filterFav(office));
+  renderGrid("stretchingGrid", filterFav(stretching));
 });
 </script>
 
