@@ -2,182 +2,231 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Unified Drill Library</title>
 <style>
-body { font-family: Arial, sans-serif; background:#f5f6fa; margin:0; padding:0;}
-header { text-align:center; padding:20px; background:#2f3640; color:#fff;}
-header h1 { margin:0; font-size:2em;}
-nav { text-align:center; margin:15px 0;}
-nav button { margin:0 10px; padding:10px 20px; font-size:1em; border:none; border-radius:5px; cursor:pointer; background:#00a8ff; color:#fff; transition:0.3s; }
-nav button:hover { background:#0097e6; }
-
-#search { width:200px; padding:7px; border-radius:5px; border:1px solid #ccc; margin-bottom:15px;}
-
-.grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:20px; padding:20px;}
-.grid-item { text-align:center; background:#fff; padding:10px; border-radius:10px; box-shadow:0 4px 8px rgba(0,0,0,0.1); transition: transform 0.2s;}
-.grid-item img { width:200px; height:350px; object-fit:cover; cursor:pointer; border-radius:5px; }
-.grid-item:hover { transform: scale(1.05); box-shadow:0 6px 12px rgba(0,0,0,0.2);}
-.grid-item p { margin-top:8px; font-weight:bold;}
-
-.hidden { display:none;}
-h2 { margin-top:40px; padding-left:20px; color:#2f3640;}
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
+        padding: 0;
+    }
+    header {
+        background-color: #004080;
+        color: white;
+        padding: 20px;
+        text-align: center;
+    }
+    header h1 {
+        margin: 0;
+        font-size: 2em;
+    }
+    .nav-buttons {
+        margin-top: 10px;
+    }
+    .nav-buttons a {
+        display: inline-block;
+        margin: 5px 10px;
+        padding: 10px 15px;
+        background-color: #0066cc;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background 0.3s;
+    }
+    .nav-buttons a:hover {
+        background-color: #004080;
+    }
+    .controls {
+        display: flex;
+        justify-content: center;
+        margin: 20px 0;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .controls input {
+        padding: 10px;
+        font-size: 1em;
+        width: 250px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+    }
+    .controls button {
+        padding: 10px 15px;
+        font-size: 1em;
+        border-radius: 5px;
+        border: none;
+        background-color: #0066cc;
+        color: white;
+        cursor: pointer;
+        transition: background 0.3s;
+    }
+    .controls button:hover {
+        background-color: #004080;
+    }
+    .section {
+        margin: 30px;
+    }
+    .section h2 {
+        text-align: center;
+        font-size: 1.8em;
+        color: #004080;
+        margin-bottom: 20px;
+    }
+    .grid-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 20px;
+        justify-items: center;
+    }
+    .grid-item {
+        text-align: center;
+        transition: transform 0.3s;
+    }
+    .grid-item:hover {
+        transform: scale(1.05);
+    }
+    .grid-item img {
+        width: 200px;
+        height: 350px;
+        object-fit: cover;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        cursor: pointer;
+        transition: box-shadow 0.3s;
+    }
+    .grid-item img:hover {
+        box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+    .grid-item p {
+        margin-top: 8px;
+        font-weight: bold;
+        font-size: 1em;
+        color: #333;
+    }
 </style>
 </head>
 <body>
-
 <header>
-  <h1>Unified Drill Library</h1>
-  <nav>
-    <button onclick="filterSection('all')">All Drills</button>
-    <button onclick="filterSection('favorites')">Favorites</button>
-  </nav>
-  <input type="text" id="search" placeholder="Search drills..." onkeyup="searchDrills()">
+    <h1>Unified Drill Library</h1>
+    <div class="nav-buttons">
+        <a href="#Index">Index Drills</a>
+        <a href="#Office">Office Drills</a>
+        <a href="#Stretching">Stretching Drills</a>
+    </div>
 </header>
 
-<div id="drill-container" class="grid">
-
-<!-- Example Drill Item -->
-<!-- <div class="grid-item" data-title="Grip Test" data-favorite="true" data-section="New Ones">
-  <a href="https://youtube.com/shorts/FXCRiwjWSws?si=FdcLm6vqSz6EkAtk" target="_blank">
-    <img src="images/GripDrill.png" alt="Grip Test">
-  </a>
-  <p>Grip Test</p>
-</div> -->
-
-<!-- ====================== NEW ONES ====================== -->
-<h2>New Ones</h2>
-<div class="grid-item" data-title="Coins Drill" data-favorite="true" data-section="New Ones">
-  <a href="https://www.facebook.com/share/r/184eAaBe4P/" target="_blank">
-    <img src="images/CoinsDrill.png" alt="Coins Drill">
-  </a>
-  <p>Coins Drill</p>
+<div class="controls">
+    <input type="text" id="searchInput" placeholder="Search drills...">
+    <button id="favoritesBtn">Show Favorites</button>
 </div>
 
-<div class="grid-item" data-title="Driver Circle" data-favorite="true" data-section="New Ones">
-  <a href="https://www.facebook.com/share/r/1Mf3CfWhdB/" target="_blank">
-    <img src="images/DriverCircle.png" alt="Driver Circle">
-  </a>
-  <p>Driver Circle</p>
+<!-- Index Drills Section -->
+<div class="section" id="Index">
+    <h2>Index Drills</h2>
+    <div class="grid-container" id="indexGrid">
+        <!-- Replace the following grid-item entries with all your Index drills -->
+        <div class="grid-item" data-title="Grip Test" data-favorite="true">
+            <a href="https://youtube.com/shorts/FXCRiwjWSws?si=FdcLm6vqSz6EkAtk" target="_blank">
+                <img src="images/GripDrill.png" alt="Grip Test">
+            </a>
+            <p>Grip Test</p>
+        </div>
+        <div class="grid-item" data-title="Grip Analysis" data-favorite="true">
+            <a href="https://www.facebook.com/share/r/15t9f6Hbrt/" target="_blank">
+                <img src="images/GripAnalysis.png" alt="Grip Analysis">
+            </a>
+            <p>Grip Analysis</p>
+        </div>
+        <div class="grid-item" data-title="Keep Head Still Drill" data-favorite="false">
+            <a href="https://www.facebook.com/share/r/1H16ixiqbd/" target="_blank">
+                <img src="images/HeadStill.png" alt="Keep Head Still Drill">
+            </a>
+            <p>Keep Head Still Drill</p>
+        </div>
+        <div class="grid-item" data-title="Weight Shift" data-favorite="false">
+            <a href="https://www.facebook.com/share/r/1BWfWbr27A/" target="_blank">
+                <img src="images/WeightShift.png" alt="Weight Shift">
+            </a>
+            <p>Weight Shift</p>
+        </div>
+        <!-- Continue adding all remaining Index drills in the same pattern -->
+    </div>
 </div>
 
-<div class="grid-item" data-title="Study" data-favorite="true" data-section="New Ones">
-  <a href="https://www.facebook.com/share/r/19Y61BJVCU/" target="_blank">
-    <img src="images/Study.png" alt="Study">
-  </a>
-  <p>Study</p>
+<!-- Office Drills Section -->
+<div class="section" id="Office">
+    <h2>Office Drills</h2>
+    <div class="grid-container" id="officeGrid">
+        <!-- Replace the following grid-item entries with all your Office drills -->
+        <div class="grid-item" data-title="Left Knee" data-favorite="false">
+            <a href="https://youtube.com/shorts/q17LA-BlIrE?si=HQjBnOSWq2mwPGi2" target="_blank">
+                <img src="images/LeftKnee.png" alt="Left Knee">
+            </a>
+            <p>Left Knee</p>
+        </div>
+        <div class="grid-item" data-title="Rotation Drill" data-favorite="false">
+            <a href="https://youtube.com/shorts/9BjYi4fHB9Y?si=ML5Cv_R3W1t_sNr4" target="_blank">
+                <img src="images/RotationOffice.png" alt="Rotation Drill">
+            </a>
+            <p>Rotation Drill</p>
+        </div>
+        <div class="grid-item" data-title="Sway Fix" data-favorite="false">
+            <a href="https://www.facebook.com/share/r/1LjfWo8PER/" target="_blank">
+                <img src="images/SwayFix.png" alt="Sway Fix">
+            </a>
+            <p>Sway Fix</p>
+        </div>
+        <!-- Continue adding all remaining Office drills in the same pattern -->
+    </div>
 </div>
 
-<div class="grid-item" data-title="Stretch" data-favorite="true" data-section="New Ones">
-  <a href="https://www.facebook.com/share/r/183Bm53PmJ/" target="_blank">
-    <img src="images/Stretch.png" alt="Stretch">
-  </a>
-  <p>Stretch</p>
-</div>
-
-<div class="grid-item" data-title="Compression" data-favorite="true" data-section="New Ones">
-  <a href="https://www.facebook.com/share/v/1WnpegqmGH/" target="_blank">
-    <img src="images/CompressionShaftLean.png" alt="Compression">
-  </a>
-  <p>Compression</p>
-</div>
-
-<div class="grid-item" data-title="Early Extension Stick In Belt Loops" data-favorite="true" data-section="New Ones">
-  <a href="https://youtube.com/shorts/rs3F2hvJuFc?si=B1sp1xYhI5t9OdE8" target="_blank">
-    <img src="images/StickBeltLoops.png" alt="Stick In Belt Loops">
-  </a>
-  <p>Stick In Belt Loops</p>
-</div>
-
-<div class="grid-item" data-title="Split Hand Drill" data-favorite="true" data-section="New Ones">
-  <a href="https://www.facebook.com/share/r/17KawAj72Y/" target="_blank">
-    <img src="images/SplitGripDrill.png" alt="Split Hand Drill">
-  </a>
-  <p>Split Hand Drill</p>
-</div>
-
-<!-- ====================== KEEPERS ====================== -->
-<h2>Keepers</h2>
-<div class="grid-item" data-title="Grip Test" data-favorite="true" data-section="Keepers">
-  <a href="https://youtube.com/shorts/FXCRiwjWSws?si=FdcLm6vqSz6EkAtk" target="_blank">
-    <img src="images/GripDrill.png" alt="Grip Test">
-  </a>
-  <p>Grip Test</p>
-</div>
-
-<div class="grid-item" data-title="Grip Analysis" data-favorite="true" data-section="Keepers">
-  <a href="https://www.facebook.com/share/r/15t9f6Hbrt/" target="_blank">
-    <img src="images/GripAnalysis.png" alt="Grip Analysis">
-  </a>
-  <p>Grip Analysis</p>
-</div>
-
-<div class="grid-item" data-title="Keep Head Still Drill" data-favorite="true" data-section="Keepers">
-  <a href="https://www.facebook.com/share/r/1H16ixiqbd/" target="_blank">
-    <img src="images/HeadStill.png" alt="Keep Head Still Drill">
-  </a>
-  <p>Keep Head Still Drill</p>
-</div>
-
-<div class="grid-item" data-title="Weight Shift" data-favorite="true" data-section="Keepers">
-  <a href="https://www.facebook.com/share/r/16qGJYwMzZ/" target="_blank">
-    <img src="images/WeightShift2.png" alt="Weight Shift">
-  </a>
-  <p>Weight Shift</p>
-</div>
-
-<!-- ====================== STRETCHING ====================== -->
-<h2>Stretching</h2>
-<div class="grid-item" data-title="Shoulder Injury" data-favorite="true" data-section="Stretching">
-  <a href="https://www.facebook.com/share/r/1BifyXN4MN/" target="_blank">
-    <img src="images/ShoulderInjury.png" alt="Shoulder Injury">
-  </a>
-  <p>Shoulder Injury</p>
-</div>
-
-<div class="grid-item" data-title="Hips Stretching" data-favorite="true" data-section="Stretching">
-  <a href="https://www.facebook.com/share/r/17oRo2jBv8/" target="_blank">
-    <img src="images/HipStretching.png" alt="Hips Stretching">
-  </a>
-  <p>Hips Stretching</p>
-</div>
-
-<div class="grid-item" data-title="Golf Stretching 3" data-favorite="true" data-section="Stretching">
-  <a href="https://www.facebook.com/share/r/18WVcACbnN/" target="_blank">
-    <img src="images/GolfStretching3.png" alt="Golf Stretching 3">
-  </a>
-  <p>Golf Stretching 3</p>
-</div>
-
-<div class="grid-item" data-title="Golf Stretching 10 Minutes" data-favorite="true" data-section="Stretching">
-  <a href="https://www.facebook.com/reel/3847933995513489" target="_blank">
-    <img src="images/GolfStretching10.png" alt="Golf Stretching 10 Minutes">
-  </a>
-  <p>Golf Stretching 10 Minutes</p>
-</div>
-
-<!-- Add remaining drills here in same structure, using images/filename.png -->
+<!-- Stretching Drills Section -->
+<div class="section" id="Stretching">
+    <h2>Stretching Drills</h2>
+    <div class="grid-container" id="stretchingGrid">
+        <!-- Replace the following grid-item entries with all your Stretching drills -->
+        <div class="grid-item" data-title="Shoulder Injury" data-favorite="false">
+            <a href="https://www.facebook.com/share/r/1BifyXN4MN/" target="_blank">
+                <img src="images/ShoulderInjury.png" alt="Shoulder Injury">
+            </a>
+            <p>Shoulder Injury</p>
+        </div>
+        <div class="grid-item" data-title="Hips" data-favorite="false">
+            <a href="https://www.facebook.com/share/r/17oRo2jBv8/" target="_blank">
+                <img src="images/HipStretching.png" alt="Hips">
+            </a>
+            <p>Hips</p>
+        </div>
+        <div class="grid-item" data-title="Golf Stretching 3 Stretches" data-favorite="false">
+            <a href="https://www.facebook.com/share/r/18WVcACbnN/" target="_blank">
+                <img src="images/GolfStretching3.png" alt="Golf Stretching 3 Stretches">
+            </a>
+            <p>Golf Stretching 3 Stretches</p>
+        </div>
+        <!-- Continue adding all remaining Stretching drills in the same pattern -->
+    </div>
 </div>
 
 <script>
-// Search functionality
-function searchDrills() {
-  let input = document.getElementById('search').value.toLowerCase();
-  let items = document.querySelectorAll('.grid-item');
-  items.forEach(item => {
-    let title = item.dataset.title.toLowerCase();
-    item.style.display = title.includes(input) ? 'block' : 'none';
-  });
-}
+const searchInput = document.getElementById('searchInput');
+const favoritesBtn = document.getElementById('favoritesBtn');
+let favoritesOnly = false;
 
-// Favorites filtering
-function filterSection(section) {
-  let items = document.querySelectorAll('.grid-item');
-  if (section === 'all') {
-    items.forEach(item => item.style.display='block');
-  } else if (section === 'favorites') {
-    items.forEach(item => item.style.display = (item.dataset.favorite === 'true') ? 'block' : 'none');
-  }
-}
+searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+    document.querySelectorAll('.grid-item').forEach(item => {
+        const title = item.dataset.title.toLowerCase();
+        const isFavorite = item.dataset.favorite === "true";
+        item.style.display = (title.includes(query) && (!favoritesOnly || isFavorite)) ? 'block' : 'none';
+    });
+});
+
+favoritesBtn.addEventListener('click', () => {
+    favoritesOnly = !favoritesOnly;
+    favoritesBtn.textContent = favoritesOnly ? "Show All" : "Show Favorites";
+    searchInput.dispatchEvent(new Event('input'));
+});
 </script>
 
 </body>
