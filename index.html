@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Golf Drill Library</title>
+<style>
+body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:linear-gradient(180deg,#f7f9fc,#eef2f7);margin:0;color:#1f2933;}
+.container{max-width:1200px;margin:auto;padding:30px 20px 50px;}
+h1{text-align:center;margin-bottom:5px;font-weight:700;}
+.subtitle{text-align:center;color:#6b7280;margin-bottom:25px;font-size:18px;}
+.navbar{display:flex;justify-content:center;gap:10px;margin-bottom:25px;flex-wrap:wrap;}
+.navbtn{background:#2c7be5;color:white;padding:10px 18px;border-radius:6px;text-decoration:none;font-weight:600;font-size:14px;box-shadow:0 2px 6px rgba(0,0,0,.15);transition:.2s;}
+.navbtn:hover{background:#1a5fc2;}
+.controls{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:30px;}
+.search{padding:10px 14px;font-size:15px;border-radius:6px;border:1px solid #d1d5db;width:260px;}
+.favbtn{background:#111827;color:white;border:none;padding:10px 16px;border-radius:6px;font-weight:600;cursor:pointer;}
+.favbtn:hover{background:#374151;}
+.section{margin-bottom:50px;}
+.section h2{font-size:22px;color:#1f2933;margin-bottom:20px;text-align:center;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:24px;}
+.card{background:white;border-radius:12px;padding:12px;box-shadow:0 6px 14px rgba(0,0,0,.12);transition:.25s;text-align:center;position:relative;}
+.card:hover{transform:translateY(-6px);box-shadow:0 12px 24px rgba(0,0,0,.18);}
+.card img{width:200px;height:350px;object-fit:cover;border-radius:8px;cursor:pointer;}
+.label{margin-top:8px;font-weight:600;font-size:14px;}
+.star{position:absolute;top:10px;right:12px;font-size:22px;cursor:pointer;color:#d1d5db;transition:.2s;}
+.star.active{color:#fbbf24;}
+.star:hover{transform:scale(1.2);}
+</style>
+</head>
+<body>
+
+<div class="container">
+<h1>Golf Drill Library</h1>
+<div class="subtitle">All Drills in One Page</div>
+
+<div class="navbar">
+<a class="navbtn" href="#drills">Drills</a>
+<a class="navbtn" href="#office">Office</a>
+<a class="navbtn" href="#stretching">Stretching</a>
+</div>
+
+<div class="controls">
+<input id="search" class="search" placeholder="Search drills...">
+<button class="favbtn" onclick="showFavorites()">Favorites</button>
+</div>
+
+<!-- DRILLS SECTION -->
+<div id="drills" class="section">
+<h2>Drills</h2>
+<div id="grid-drills" class="grid"></div>
+</div>
+
+<!-- OFFICE SECTION -->
+<div id="office" class="section">
+<h2>Office Drills</h2>
+<div id="grid-office" class="grid"></div>
+</div>
+
+<!-- STRETCHING SECTION -->
+<div id="stretching" class="section">
+<h2>Stretching Drills</h2>
+<div id="grid-stretching" class="grid"></div>
+</div>
+
+<script>
+const allDrills={
+drills:[
+{img:"GripDrill",label:"Grip Test",url:"https://youtube.com/shorts/FXCRiwjWSws?si=FdcLm6vqSz6EkAtk"},
+{img:"GripAnalysis",label:"Grip Analysis",url:"https://www.facebook.com/share/r/15t9f6Hbrt/"},
+{img:"HeadStill",label:"Keep Head Still Drill",url:"https://www.facebook.com/share/r/1H16ixiqbd/"},
+{img:"WeightShift",label:"Weight Shift",url:"https://www.facebook.com/share/r/1BWfWbr27A/"},
+{img:"ImpactLine",label:"Impact Line",url:"https://www.facebook.com/share/r/19rd2YxiLU/"},
+{img:"DoorframeDriver",label:"Doorframe Driver",url:"https://www.facebook.com/share/r/1CfVicRhRt/"},
+{img:"StepIntoIt",label:"Step Into It",url:"https://www.facebook.com/share/r/18UrLqCUyJ/"},
+{img:"SwingStepDrill",label:"Swing Step Drill",url:"https://www.facebook.com/share/v/1KoLfqLa2s/"},
+{img:"CompressionStepDrill",label:"Compression Step Drill",url:"https://www.facebook.com/share/r/1BN5YzNKsZ/"},
+{img:"SlowDown",label:"Slow Down Swing Drill",url:"https://youtube.com/shorts/o72qLYgj8ug?si=QKy27epA_yOPhzG5"},
+{img:"SquashBug",label:"Squash The Bug",url:"https://www.facebook.com/reel/1878055812806888"},
+{img:"EarlyExtension",label:"Early Extension",url:"https://www.facebook.com/share/v/1ACeAhSnUg/"},
+{img:"IronDrill",label:"Iron Drill",url:"https://www.instagram.com/reel/DHjqiGmThjw/?igsh=aDFhNjFmYTZsYnJ5"},
+{img:"Hands",label:"Hands",url:"https://youtube.com/shorts/pBSMU1Og2Hc?si=a_nDBvVAS8DUABZm"},
+{img:"ShallowClubStick",label:"Shallow Club (Stick)",url:"https://www.facebook.com/share/r/16E2uBwfRm/"},
+{img:"OverTheTopStick",label:"Over The Top (Stick)",url:"https://www.facebook.com/share/r/1XWTD8CxPK/"},
+{img:"3DrillsStick",label:"3 Drills (Stick)",url:"https://www.facebook.com/share/r/1AcLW4fm6i/"},
+{img:"StrikeDrillSticks",label:"Strike Drill (Sticks)",url:"https://www.facebook.com/share/r/1AGcZTJAhv/"},
+{img:"WedgeDrillSticks",label:"Wedge Drill (Sticks)",url:"https://www.facebook.com/share/r/12LNrHuHebu/"},
+{img:"OneHandSwing",label:"One Hand Swing",url:"https://youtube.com/shorts/ircfhXoBUrg?si=xnUvIsCEmtkjpBgw"},
+{img:"GeneratePower",label:"Generate Power Drill",url:"https://youtube.com/shorts/lKmhCgld1W0?si=7XBrFgej2j5hf-dn"},
+{img:"DropArms",label:"Drop Arms",url:"https://www.facebook.com/share/r/16JUHTPiGX/"},
+{img:"DropArmsElbow",label:"Drop Arms Elbow",url:"https://youtube.com/shorts/QG0zJUPg2QI?si=YxpIk6Mj40-9Vb4w"},
+{img:"TowelDrill",label:"Towel Drill",url:"https://www.instagram.com/reel/DJUD6arzaub/?igsh=MWtsN21uNzRqYnJxdA=="},
+{img:"LtoLDrill",label:"L to L Drill",url:"https://www.facebook.com/share/r/19xXuvJdbT/"},
+{img:"SequencingDrill",label:"Sequencing Drill",url:"https://www.facebook.com/share/r/1ACeph1XQ4/"},
+{img:"LateRelease",label:"Late Release Drill",url:"https://www.facebook.com/share/r/1FzNkygS8G/"},
+{img:"FollowThrough",label:"Follow Through",url:"https://www.facebook.com/share/r/17BksoZLXn/"},
+{img:"RightElbow",label:"Right Elbow",url:"https://www.facebook.com/share/r/15tGy4fr19/"},
+{img:"PunchShotDrill",label:"Punch Shot Drill",url:"https://www.facebook.com/share/v/16JZFy9RU6/"},
+{img:"ChickenWing",label:"Chicken Wing",url:"https://www.facebook.com/share/r/17uamcRn4T/"},
+{img:"KneeDrill",label:"Knee Drill",url:"https://www.facebook.com/share/r/16PbvKP9GT/"},
+{img:"HingeClub",label:"Hinge Club",url:"https://www.facebook.com/share/r/1846ropedK/"},
+{img:"CompressionBallAhead",label:"Compression Ball Ahead Drill And 2 Others",url:"https://youtu.be/RTqa5CPu5Xo?t=208"},
+{img:"ChalkLine",label:"Hit The Chalk Line After The Ball",url:"https://www.facebook.com/share/r/1AF49LRv5s/"},
+{img:"GloveUnderBicep",label:"Glove Under Bicep Drill",url:"https://www.facebook.com/share/r/16Bhj96g4v/"},
+{img:"CoinDrill",label:"Coin Drill",url:"https://www.facebook.com/share/r/19MbtqAXMn/"},
+{img:"SqueezeElbows",label:"Squeeze Elbows",url:"https://www.facebook.com/share/r/1CVTfQwiAG/"},
+{img:"StepStretch",label:"Step & Stretch",url:"https://www.facebook.com/share/r/1AsX6MFiHM/"},
+{img:"SwingThoughts",label:"Swing Thoughts For Knee",url:"https://www.facebook.com/share/r/17A17TxKa2/"},
+{img:"CompressionLoadFoot",label:"Compression Load Foot",url:"https://www.facebook.com/share/r/18CNtqXDmu/"},
+{img:"WeightShift2",label:"Weight Shift",url:"https://www.facebook.com/share/r/16qGJYwMzZ/"},
+{img:"ShourldersStick",label:"Shoulders (Stick)",url:"https://www.facebook.com/share/r/1BfbG992GG/"},
+{img:"StickBeltLoops",label:"Stick In Belt Loops Timing Drill",url:"https://youtube.com/shorts/rs3F2hvJuFc"},
+{img:"CompressionFeelsLike",label:"Compression Feels Like",url:"https://youtube.com/shorts/J6DSw7Z-fQs"},
+{img:"CoinsDrill",label:"Coins drill",url:"https://www.facebook.com/share/r/184eAaBe4P/"},
+{img:"SplitGripDrill",label:"Split Hand Drill",url:"https://www.facebook.com/share/r/17KawAj72Y/"},
+{img:"CompressionShaftLean",label:"Compression Excess Shaft Lean",url:"https://www.facebook.com/share/v/1WnpegqmGH/"},
+{img:"LeftKnee",label:"Left Knee",url:"https://youtube.com/shorts/q17LA-BlIrE?si=HQjBnOSWq2mwPGi2"},
+{img:"RotationOffice",label:"Rotation Drill",url:"https://youtube.com/shorts/9BjYi4fHB9Y?si=ML5Cv_R3W1t_sNr4"},
+{img:"SwayFix",label:"Sway Fix",url:"https://www.facebook.com/share/r/1LjfWo8PER/"},
+{img:"ShallowingExercises",label:"Shallowing",url:"https://www.facebook.com/share/r/1CeA2a6T5y/"},
+{img:"BackswingOffice",label:"Backswing",url:"https://www.facebook.com/share/r/17Fpxu57XX/"},
+{img:"BackswingPosture",label:"Backswing",url:"https://www.facebook.com/share/r/179sBZc4U2/"},
+{img:"BackswingWall",label:"Backswing",url:"https://www.facebook.com/share/r/14DzAbzTQQQ/"},
+{img:"HipMovement",label:"Hip Movement",url:"https://www.facebook.com/share/r/1DpA9WH1EK/"},
+{img:"PivotDrill",label:"Pivot Drill",url:"https://www.facebook.com/share/r/1Bs7Hz8B9S/"},
+{img:"HeadOnWall",label:"Head On Wall",url:"https://www.facebook.com/share/r/19nQ8q3FtQ/"},
+{img:"LeaningDrill",label:"Leaning Drill",url:"https://www.facebook.com/share/r/1GEe8VFekf/"},
+{img:"RightArmOffice",label:"Right Arm Drill",url:"https://www.facebook.com/share/r/1BZn76taeq/"},
+{img:"DownswingFeels",label:"Downswing Feels",url:"https://www.facebook.com/share/r/1a1XxK1S5X/"},
+{img:"SwayDrillOffice",label:"Sway Drill",url:"https://www.facebook.com/share/r/1DEFXsiXGY/"},
+{img:"CompressionOffice",label:"Compression Drill",url:"https://www.facebook.com/share/r/1KRRonHu2r/"},
+{img:"ShoulderInjury",label:"Shoulder Injury",url:"https://www.facebook.com/share/r/1BifyXN4MN/"},
+{img:"HipStretching",label:"Hips",url:"https://www.facebook.com/share/r/17oRo2jBv8/"},
+{img:"GolfStretching3",label:"Golf Stretching 3 Stretches",url:"https://www.facebook.com/share/r/18WVcACbnN/"},
+{img:"GolfStretching10",label:"Golf Stretching 10 Minutes",url:"https://www.facebook.com/reel/3847933995513489"},
+{img:"BackStretching",label:"Back Stretching",url:"https://www.facebook.com/share/r/1BMLcSx3di/"},
+{img:"ShoulderStretching",label:"Shoulders Stretching",url:"https://www.facebook.com/share/r/15MLkySBsb/"},
+{img:"ElbowsForearms",label:"Elbows & Forearms Stretching",url:"https://www.facebook.com/share/r/1BjRCV1iaL/"},
+{img:"FullBody",label:"Full Body Stretching",url:"https://www.facebook.com/reel/1422332818882057"},
+{img:"TrapsStretching",label:"Traps Stretching",url:"https://youtube.com/shorts/uNM9bQi2LW4"},
+{img:"NeckStretching",label:"Neck Stretching",url:"https://youtube.com/shorts/VX8KKWT_lCc"},
+{img:"ShoulderBlades",label:"Shoulder Blade Stretching",url:"https://youtube.com/shorts/77Nqb7b-Ck4"},
+{img:"ShoulderMobility",label:"Shoulder Stretching",url:"https://www.facebook.com/share/r/1DKRqDPk6A/"},
+{img:"HipFlexibility",label:"Hip Flexibility",url:"https://youtube.com/shorts/nKhxWxKVzf4"},
+{img:"ShouldersStick",label:"Shoulder Stretching",url:"https://www.facebook.com/share/r/18qGUCXxJC/"},
+{img:"FrozenShoulder",label:"Frozen Shoulder Stretching",url:"https://www.facebook.com/share/r/14MX52stEma/"},
+{img:"LowerBack",label:"Lower Back Stretch",url:"https://www.facebook.com/share/r/183Bm53PmJ/"},
+{img:"EarlyExtensionStretch",label:"Early Extension Stretch",url:"https://www.facebook.com/share/r/15d9xqGnKsG/"},
+];
+
+let favorites=JSON.parse(localStorage.getItem("favDrills")||"[]");
+
+function drawDrills(sectionId, list){
+const container=document.getElementById(sectionId);
+container.innerHTML="";
+list.forEach(d=>{
+const card=document.createElement("div");
+card.className="card";
+const star=document.createElement("div");
+star.className="star";
+star.innerHTML="★";
+if(favorites.includes(d.img)) star.classList.add("active");
+star.onclick=()=>toggleFav(d.img,star);
+card.innerHTML+=`<a href="${d.url}" target="_blank"><img src="images/${d.img}.png"></a><div class="label">${d.label}</div>`;
+card.appendChild(star);
+container.appendChild(card);
+});
+}
+
+function toggleFav(name,star){
+if(favorites.includes(name)){favorites=favorites.filter(f=>f!==name);star.classList.remove("active");}
+else{favorites.push(name);star.classList.add("active");}
+localStorage.setItem("favDrills",JSON.stringify(favorites));
+}
+
+document.getElementById("search").addEventListener("input",function(){
+const term=this.value.toLowerCase();
+["grid-drills","grid-office","grid-stretching"].forEach(id=>{
+const section=allDrills[id.replace("grid-","")];
+const filtered=section.filter(d=>d.label.toLowerCase().includes(term));
+drawDrills(id,filtered);
+});
+});
+
+function showFavorites(){
+["grid-drills","grid-office","grid-stretching"].forEach(id=>{
+const section=allDrills[id.replace("grid-","")];
+const filtered=section.filter(d=>favorites.includes(d.img));
+drawDrills(id,filtered);
+});
+}
+
+// Assign sections manually since we combined
+drawDrills("grid-drills",allDrills.drills.filter(d=>d.url.includes("Grip")||d.url.includes("Swing")||d.url.includes("SlowDown")));
+drawDrills("grid-office",allDrills.drills.filter(d=>d.url.includes("Office")||d.url.includes("Backswing")||d.url.includes("Pivot")||d.url.includes("HipMovement")||d
