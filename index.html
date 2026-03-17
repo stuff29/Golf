@@ -378,7 +378,11 @@ filterCategory("drills");
 
 
 function showTrackman(){
-    document.getElementById("grid").innerHTML = `
+    const grid = document.getElementById("grid");
+    // Remove the 'grid' class so it doesn't apply the side-by-side layout
+    grid.classList.remove("grid");
+
+    grid.innerHTML = `
     <div class="trackman-section">
         <div class="tm-card">
             <div class="tm-title">Notes / Adjustments</div>
