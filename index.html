@@ -141,27 +141,37 @@ transform:scale(1.2);
 
 /* TRACKMAN */
 .trackman-section {
-    max-width: 1000px;      /* optional: keeps it from getting too wide on large screens */
-    margin: 0 auto;          /* centers the section */
     display: flex;
-    justify-content: center; /* centers contents horizontally */
+    justify-content: center; /* center horizontally */
+    margin: 20px auto;       /* space above and below section */
 }
 
 .tm-card {
-    width: 100%;             /* makes the card fill the trackman-section */
-    max-width: 900px;        /* optional: keeps table readable */
+    width: 710px;             /* width of 3 video thumbnails */
     background: white;
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px 20px;       /* more top/bottom padding */
     margin-bottom: 25px;
     box-shadow: 0 6px 14px rgba(0,0,0,.12);
 }
 
+.tm-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 15px;      /* extra space below title */
+}
+
 .tm-table {
-    width: 100%;             /* table fills the card */
+    width: 100%;              /* table fills the card */
     border-collapse: collapse;
     font-size: 14px;
-    text-align: center;      /* center the text in table cells */
+    text-align: center;       /* center table text */
+}
+
+.tm-table th,
+.tm-table td {
+    padding: 10px 8px;        /* more padding inside cells */
+    border-bottom: 1px solid #e5e7eb;
 }
 
 </style>
