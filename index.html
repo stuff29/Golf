@@ -138,7 +138,6 @@ color:#fbbf24;
 .star:hover{
 transform:scale(1.2);
 }
-
 <!-- TRACKMAN SECTION -->
 <div class="trackman-section">
   <div class="tm-card">
@@ -200,7 +199,7 @@ transform:scale(1.2);
 <style>
 /* TRACKMAN SECTION */
 .trackman-section {
-  max-width: 800px; /* wide column ~3 video thumbnails */
+  max-width: 900px; /* wide column */
   margin: 0 auto;
   padding: 10px;
 }
@@ -213,6 +212,7 @@ transform:scale(1.2);
   box-shadow: 0 6px 14px rgba(0,0,0,.12);
 }
 
+/* Title & subtitle */
 .tm-title {
   font-size: 20px;
   font-weight: 700;
@@ -225,9 +225,11 @@ transform:scale(1.2);
   margin-bottom: 15px;
 }
 
-/* Table wrapper for horizontal scroll */
+/* Table wrapper: makes table and card look like one block */
 .tm-table-wrapper {
   overflow-x: auto;
+  margin: 0 -20px; /* negate card padding to extend table background */
+  padding: 0 20px; /* maintain spacing inside wrapper */
 }
 
 /* Table styling */
@@ -235,12 +237,12 @@ transform:scale(1.2);
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-  min-width: 700px; /* ensures wide enough table */
+  background: white; /* seamless white background */
+  min-width: 700px; /* ensures table is wide enough */
   border-radius: 8px;
-  overflow: hidden;
 }
 
-/* Header styling */
+/* Header */
 .tm-table th {
   background-color: #f3f4f6;
   font-weight: 600;
@@ -249,7 +251,7 @@ transform:scale(1.2);
   text-align: center;
 }
 
-/* Body styling */
+/* Body */
 .tm-table td {
   border-bottom: 1px solid #e5e7eb;
   text-align: center;
@@ -257,7 +259,7 @@ transform:scale(1.2);
   white-space: nowrap;
 }
 
-/* Alternating row colors */
+/* Alternating rows */
 .tm-table tbody tr:nth-child(even) {
   background-color: #f9fafb;
 }
@@ -266,17 +268,6 @@ transform:scale(1.2);
 .tm-table tbody tr:hover {
   background-color: #e5e7eb;
   transition: background 0.2s;
-}
-
-/* Placeholder styling (optional) */
-.placeholder {
-  height: 80px;
-  border: 2px dashed #d1d5db;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #9ca3af;
 }
 </style>
 </head>
