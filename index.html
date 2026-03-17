@@ -139,30 +139,55 @@ color:#fbbf24;
 transform:scale(1.2);
 }
 
-/* TRACKMAN */
-.trackman-section{
-max-width:900px;
-margin:0 auto;
+/* TRACKMAN - WIDE CENTERED COLUMN */
+.trackman-section {
+  max-width: 720px; /* approx. width of 3 video thumbnails */
+  margin: 0 auto;   /* centers the column */
 }
 
-.tm-card{
-max-width:900px;
-margin:0 auto 25px;
+.tm-card {
+  max-width: 720px;  /* match section width */
+  margin: 0 auto 25px;
+  background: white;
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.12);
 }
 
-.tm-table{
-width:100%;
-table-layout:fixed;
+.tm-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
-.tm-card{background:white;border-radius:12px;padding:20px;margin-bottom:25px;box-shadow:0 6px 14px rgba(0,0,0,.12);}
-.tm-title{font-size:18px;font-weight:700;margin-bottom:10px;}
-.tm-sub{color:#6b7280;font-size:14px;margin-bottom:10px;}
-.tm-table{width:100%;border-collapse:collapse;font-size:14px;}
+
+.tm-sub {
+  color: #6b7280;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.tm-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  table-layout: fixed; /* keeps columns even */
+}
+
 .tm-table th,
-.tm-table td{
-text-align:center;
+.tm-table td {
+  text-align: center;
+  padding: 8px; /* add some breathing room */
 }
-.placeholder{height:80px;border:2px dashed #d1d5db;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;}
+
+.placeholder {
+  height: 80px;
+  border: 2px dashed #d1d5db;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+}
 
 </style>
 </head>
