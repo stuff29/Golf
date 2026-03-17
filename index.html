@@ -343,13 +343,13 @@ localStorage.setItem("favDrills",JSON.stringify(favorites));
 }
 
 function filterCategory(cat){
+    currentCategory = cat;
 
-currentCategory=cat;
+    // make sure grid layout is restored
+    grid.classList.add("grid");
 
-const filtered=drills.filter(d=>d.category===cat);
-
-draw(filtered);
-
+    const filtered = drills.filter(d => d.category === cat);
+    draw(filtered);
 }
 
 document.getElementById("search").addEventListener("input",function(){
