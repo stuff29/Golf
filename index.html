@@ -484,55 +484,10 @@ draw(fav);
 
 filterCategory("drills");
 
-
-function showTrackman(){
-document.getElementById("grid").innerHTML = `
-<div class="trackman-section">
-
-<div class="tm-card">
-<div class="tm-title">My TrackMan Data</div>
-<div class="tm-sub">Add your own numbers here</div>
-<div class="placeholder">Your custom data section</div>
-</div>
-
-<div class="tm-card">
-<div class="tm-title">Tour Averages (TrackMan)</div>
-
-<table class="tm-table">
-<tr>
-<th>Club</th><th>Speed</th><th>Ball</th><th>Attack</th><th>Path</th><th>Spin</th><th>Carry</th><th>Apex</th>
-</tr>
-
-<tr><td>Driver</td><td>113-115</td><td>170-172</td><td>+3 to +5</td><td>±2</td><td>2500</td><td>280</td><td>95ft</td></tr>
-<tr><td>3 Wood</td><td>108-110</td><td>160-163</td><td>+1</td><td>±2</td><td>3600</td><td>245</td><td>90ft</td></tr>
-<tr><td>5 Wood</td><td>104-106</td><td>155-158</td><td>+1</td><td>±2</td><td>4300</td><td>235</td><td>95ft</td></tr>
-
-<tr><td>Hybrid</td><td>100</td><td>149</td><td>-2</td><td>±2</td><td>4400</td><td>228</td><td>95ft</td></tr>
-<tr><td>4 Iron</td><td>97</td><td>139</td><td>-4</td><td>±2</td><td>4800</td><td>205</td><td>88ft</td></tr>
-<tr><td>5 Iron</td><td>95</td><td>134</td><td>-4</td><td>±2</td><td>5300</td><td>197</td><td>85ft</td></tr>
-
-<tr><td>6 Iron</td><td>93</td><td>129</td><td>-5</td><td>±2</td><td>6200</td><td>185</td><td>83ft</td></tr>
-<tr><td>7 Iron</td><td>91</td><td>123</td><td>-5</td><td>±2</td><td>7100</td><td>174</td><td>80ft</td></tr>
-<tr><td>8 Iron</td><td>88</td><td>117</td><td>-6</td><td>±2</td><td>8000</td><td>162</td><td>78ft</td></tr>
-
-<tr><td>9 Iron</td><td>86</td><td>111</td><td>-7</td><td>±2</td><td>8600</td><td>150</td><td>75ft</td></tr>
-<tr><td>PW</td><td>84</td><td>104</td><td>-8</td><td>±2</td><td>9300</td><td>138</td><td>70ft</td></tr>
-
-<tr><td>GW</td><td>80</td><td>-</td><td>-8</td><td>±2</td><td>10000</td><td>125</td><td>68ft</td></tr>
-<tr><td>SW</td><td>75</td><td>-</td><td>-9</td><td>±2</td><td>10500</td><td>110</td><td>65ft</td></tr>
-<tr><td>LW</td><td>70</td><td>-</td><td>-10</td><td>±2</td><td>11000</td><td>90</td><td>60ft</td></tr>
-
-</table>
-</div>
-
-<div class="tm-card">
-<div class="tm-title">Notes / Adjustments</div>
-<div class="tm-sub">Track patterns, feels, swing changes</div>
-<div class="placeholder">Add notes here</div>
-</div>
-
-</div>
-`;
+function showTrackman() {
+  const section = document.getElementById("trackman-section");
+  // Toggle TrackMan section visibility without touching the drill grid
+  section.style.display = section.style.display === "block" ? "none" : "block";
 }
 
 </script>
