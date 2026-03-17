@@ -140,32 +140,33 @@ transform:scale(1.2);
 }
 
 /* TRACKMAN */
+/* Center TrackMan content */
 .trackman-section {
+    max-width: 1000px;
+    margin: auto;
     display: flex;
-    justify-content: center; /* center horizontally */
-    margin: 20px auto;       /* top/bottom spacing */
+    flex-direction: column; /* stack Notes above table */
+    align-items: center; /* center horizontally */
 }
 
+/* Make cards full width but table inside smaller and centered */
 .tm-card {
-    width: 710px;             /* approx 3 thumbnails wide */
     background: white;
     border-radius: 12px;
-    padding: 25px 20px;
+    padding: 20px;
     margin-bottom: 25px;
     box-shadow: 0 6px 14px rgba(0,0,0,.12);
+    width: 100%;
+    max-width: 800px; /* optional: make cards narrower than section */
+    box-sizing: border-box;
 }
 
 .tm-table {
-    width: 100%;              /* table fills card */
+    width: 100%;
+    max-width: 750px; /* restrict table width */
+    margin: 0 auto; /* center horizontally */
     border-collapse: collapse;
     font-size: 14px;
-    text-align: center;       /* center table text */
-}
-
-.tm-table th,
-.tm-table td {
-    padding: 10px 8px;
-    border-bottom: 1px solid #e5e7eb;
 }
 
 </style>
