@@ -140,14 +140,29 @@ transform:scale(1.2);
 }
 
 /* TRACKMAN */
-.trackman-section{max-width:1000px;margin:auto;}
-.tm-card{background:white;border-radius:12px;padding:20px;margin-bottom:25px;box-shadow:0 6px 14px rgba(0,0,0,.12);}
-.tm-title{font-size:18px;font-weight:700;margin-bottom:10px;}
-.tm-sub{color:#6b7280;font-size:14px;margin-bottom:10px;}
-.tm-table{width:100%;border-collapse:collapse;font-size:14px;}
-.tm-table th{padding:8px;background:#f1f5f9;}
-.tm-table td{padding:8px;border-bottom:1px solid #e5e7eb;}
-.placeholder{height:80px;border:2px dashed #d1d5db;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#9ca3af;}
+.trackman-section {
+    max-width: 1000px;      /* optional: keeps it from getting too wide on large screens */
+    margin: 0 auto;          /* centers the section */
+    display: flex;
+    justify-content: center; /* centers contents horizontally */
+}
+
+.tm-card {
+    width: 100%;             /* makes the card fill the trackman-section */
+    max-width: 900px;        /* optional: keeps table readable */
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.12);
+}
+
+.tm-table {
+    width: 100%;             /* table fills the card */
+    border-collapse: collapse;
+    font-size: 14px;
+    text-align: center;      /* center the text in table cells */
+}
 
 </style>
 </head>
@@ -359,18 +374,23 @@ filterCategory("drills");
 
 
 function showTrackman(){
-document.getElementById("grid").innerHTML = `
-<div class="trackman-section">
-<div class="tm-card">
-<div class="tm-title">Tour Averages (TrackMan)</div>
-<table class="tm-table">
-<tr><th>Club</th><th>Carry</th><th>Apex</th></tr>
-<tr><td>Driver</td><td>280</td><td>95ft</td></tr>
-<tr><td>7 Iron</td><td>174</td><td>80ft</td></tr>
-<tr><td>PW</td><td>138</td><td>70ft</td></tr>
-</table>
-</div>
-</div>`;
+    document.getElementById("grid").innerHTML = `
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title">Tour Averages (TrackMan)</div>
+            <table class="tm-table">
+                <tr>
+                    <th>Club</th>
+                    <th>Carry</th>
+                    <th>Apex</th>
+                </tr>
+                <tr><td>Driver</td><td>280</td><td>95ft</td></tr>
+                <tr><td>7 Iron</td><td>174</td><td>80ft</td></tr>
+                <tr><td>PW</td><td>138</td><td>70ft</td></tr>
+            </table>
+        </div>
+    </div>
+    `;
 }
 
 </script>
