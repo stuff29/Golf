@@ -182,6 +182,7 @@ transform:scale(1.2);
 <button class="navbtn" onclick="filterCategory('office')">Office</button>
 <button class="navbtn" onclick="filterCategory('stretching')">Stretching</button>
 <button class="navbtn" onclick="showTrackman()">TrackMan</button>
+<button class="navbtn" onclick="showCheatSheet()">Cheat Sheet</button>
 </div>
 
 <div class="controls">
@@ -474,6 +475,38 @@ function showTrackman(){
     `;
 }
 
+function showCheatSheet(){
+    const grid = document.getElementById("grid");
+
+    // remove grid layout so it behaves like TrackMan
+    grid.classList.remove("grid");
+
+    grid.innerHTML = `
+    <div class="trackman-section">
+
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Cheat Sheet Notes</u></b></div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+
+        </div>
+
+    </div>
+    `;
+}
 </script>
 
 </body>
