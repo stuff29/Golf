@@ -878,11 +878,68 @@ function showCheatSheet(){
     </div>    
     `;
 
-  /* ------------------------------------------------------------------------------------------END OF CHEAT SHEET PAGE ---------------------------------------------------------------------------------------------- */
  
 setPageText("");
 
 }
+
+ /* ------------------------------------------------------------------------------------------END OF CHEAT SHEET PAGE ---------------------------------------------------------------------------------------------- */
+
+ /* -----------------------------------------------------------------------------------START OF TRY THIS / LESSONS PAGE -------------------------------------------------------------------------------------------- */
+  
+function showCheatSheet(){
+    const grid = document.getElementById("grid");
+
+    // remove grid layout so it behaves like TrackMan
+    grid.classList.remove("grid");
+
+    grid.innerHTML = `
+    <div class="trackman-section">
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Wind</u></b></div>
+            <div class="placeholder">- Drop grass and see where the wind blows it</div>
+            <div class="placeholder">- Wind behind you, take 2 yards off shot for each yard paced off between you and where grass landed</div>
+            <div class="placeholder">- Wind in face, 3 yards added to distance for each yard it blows away</div>
+            <div class="placeholder">- Hitting from an elevated position increases wind by 50% because ball is in the air longer - 10 yard wind becomes 15 yards into wind or with wind</div>
+        </div>
+
+    </div>
+
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Wind</u></b></div>
+            <div class="placeholder">- Drop grass and see where the wind blows it</div>
+            <div class="placeholder">- Wind behind you, take 2 yards off shot for each yard paced off between you and where grass landed</div>
+            <div class="placeholder">- Wind in face, 3 yards added to distance for each yard it blows away</div>
+            <div class="placeholder">- Hitting from an elevated position increases wind by 50% because ball is in the air longer - 10 yard wind becomes 15 yards into wind or with wind</div>
+        </div>
+
+    </div>
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Wind</u></b></div>
+            <div class="placeholder">- Drop grass and see where the wind blows it</div>
+            <div class="placeholder">- Wind behind you, take 2 yards off shot for each yard paced off between you and where grass landed</div>
+            <div class="placeholder">- Wind in face, 3 yards added to distance for each yard it blows away</div>
+            <div class="placeholder">- Hitting from an elevated position increases wind by 50% because ball is in the air longer - 10 yard wind becomes 15 yards into wind or with wind</div>
+        </div>
+
+    </div>    
+    
+    `;
+
+ 
+setPageText("");
+
+}
+
+ /* -------------------------------------------------------------------------------------END OF TRY THIS / LESSONS PAGE ---------------------------------------------------------------------------------------------- */
+   
+
+  
 </script>
 
 <div id="noteModal" class="modal">
