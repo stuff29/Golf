@@ -125,9 +125,9 @@ font-size:14px;
 position:absolute;
 top:10px;
 right:12px;
-font-size:22px;
+font-size:50px;
 cursor:pointer;
-color:#d1d5db;
+color:#F88379;
 transition:.2s;
 }
 
@@ -143,15 +143,15 @@ transform:scale(1.2);
   position:relative;
 }
 
-/* Yellow dot */
+/* Blue dot */
 .note-dot{
   position:absolute;
   top:8px;
   left:8px;
-  width:100px;
-  height:100px;
+  width:25px;
+  height:25px;
   border-radius:50%;
-  background:#fbbf24;
+  background:#7DF9FF;
   cursor:pointer;
 }
 
@@ -259,10 +259,11 @@ transform:scale(1.2);
 <div class="navbar">
 <button class="navbtn" onclick="filterCategory('drills')">Drills</button>
 <button class="navbtn" onclick="filterCategory('office')">Office</button>
-<button class="navbtn" onclick="filterCategory('simulator')">Simulator</button>
 <button class="navbtn" onclick="filterCategory('stretching')">Stretching</button>
-<button class="navbtn" onclick="showTrackman()">TrackMan</button>
+<button class="navbtn" onclick="filterCategory('simulator')">Simulator</button>
 <button class="navbtn" onclick="filterCategory('putting')">Putting</button>
+<button class="navbtn" onclick="showLessons()">Lessons</button>
+<button class="navbtn" onclick="showTrackman()">TrackMan</button>
 <button class="navbtn" onclick="showCheatSheet()">Cheat Sheets</button>
 </div>
 
@@ -877,11 +878,134 @@ function showCheatSheet(){
     </div>    
     `;
 
-  /* ------------------------------------------------------------------------------------------END OF CHEAT SHEET PAGE ---------------------------------------------------------------------------------------------- */
  
 setPageText("");
 
 }
+
+ /* ------------------------------------------------------------------------------------------END OF CHEAT SHEET PAGE ---------------------------------------------------------------------------------------------- */
+
+ /* -----------------------------------------------------------------------------------START OF TRY THIS / LESSONS PAGE -------------------------------------------------------------------------------------------- */
+
+  
+function showLessons(){
+    const grid = document.getElementById("grid");
+
+    // remove grid layout so it behaves like TrackMan
+    grid.classList.remove("grid");
+
+    grid.innerHTML = `
+
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Chipping</u></b>
+<br>
+- Weight left more<br>
+- Club head width apart - feet<br>
+- Closer to the ball - heel raised a touch<br>
+- Not too much shaft lean<br>
+- Chest down after the ball is hit - chest over left foot is the thought pattern<br>
+- Hitting more down on the ball rather than scooping<br>
+- Putting stroke but don't be afraid to hit it<br>            
+          </div>
+        </div>
+    </div>    
+
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Hybrid</u></b>
+<br>
+- On club head inside like driver<br>
+- Hands straight on with ball - neutral not forward<br>
+- Flare left foot a bit<br>
+- Hands and club head reach ball at the same time - Don't flip hands or lean shaft<br>
+- Slow swing down a bit if need be<br>          
+          </div>
+        </div>
+    </div>    
+
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Back To Target Drill</u></b>
+<br>
+- Get to the top of the backswing<br>
+- Keep back to target - Don't move it<br>
+- Drop arms without moving your back<br>
+- Get used to the feeling of arms starting first<br>
+- Pulling arms down and then turning the body<br>
+- Fastest hand speed comes in the pull down, not when you are about to hit the ball<br>     
+          </div>
+        </div>
+    </div>    
+
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Driving</u></b>
+<br>
+- Launch angle 11 - 14<br>
+- Spin under 2,000<br>
+- Line up a couple inches further back from inside ankle (one club head width)<br>
+- Feet not spread too far apart<br>
+- Hands lined up with ball - forward but not by much<br>
+- Hands low, left arm straight, toe up, line dot with ball<br>
+- Force right shoulder to tilt down a bit and swing natural - 60/40 on right foot helps with this<br>
+- Right leg straightens more, not swaying, drops hip back more to make a bigger turn<br>
+- Looking from behind the ball, right forearm should not be lined up above left arm<br>
+- Long Hitting - left ankle comes up, all weight moves to right, grip is 6, long arching backswing<br>
+- Think of swinging low to high on the proper arc<br>
+<a href="https://www.facebook.com/share/r/162euNoEfe/" target="_blank">Video 1</a><br>
+<a href="https://www.youtube.com/watch?v=Jp_gmyZWpjE" target="_blank">Video 2</a><br>
+          </div>
+        </div>
+    </div>   
+    
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Putting</u></b>
+<br>
+- Aim and consistent setup is most important<br>
+- Grip pressure has to remain the same the entire time you putt<br>
+- Set the putter down the same way every time - don't push down hard one time and not the next<br>
+- Weight forward, left locked<br>
+- Ball ahead in stance by an inch or two<br>
+- Arms hang down loose, grip there<br>
+- Tight in armpits, not biceps to side<br>
+- Armpits start the swing, not the hands<br>
+- Handle to feel like it goes up left arm<br>
+- Short putt back in stance a couple inches for longer backswing<br>
+<br>
+- Line up putt as you would normally<br>
+- Stand over putt and get your head to a point where the ball visually lines up with the line<br>
+- Set the putter on that line and keep your head in the spot where it visually stays on that line<br>
+- Set your feet and align ball in stnace accordingly<br>
+- Drill at about 12 minutes<br>
+<br>
+<a href="https://youtu.be/FqjookBulo4?si=23R91kOEwibopK-6" target="_blank">Putting Lesson</a><br>
+<br>
+- Relax the arms<br>
+- Aim a little right<br>
+- Shoulder turn is the key - practice every day with stick across shoulders<br>
+- Don't have to snap wrists too much<br>
+- Set 6 tees in tunnel the club head travels<br>
+- Practice in slow motion to feel everything so when fast you know what happened<br>
+          </div>
+        </div>
+    </div>   
+
+
+    `; 
+setPageText("");
+}
+
+ /* -------------------------------------------------------------------------------------END OF TRY THIS / LESSONS PAGE ---------------------------------------------------------------------------------------------- */
+   
+
+  
 </script>
 
 <div id="noteModal" class="modal">
