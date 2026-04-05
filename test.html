@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>My Golf Page</title>
+
+<style>
+body{
+font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;
+background:linear-gradient(180deg,#f7f9fc,#eef2f7);
+margin:0;
+color:#1f2933;
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:30px 20px 50px;
+}
+
+h1{
+text-align:center;
+margin-bottom:10px;
+font-weight:700;
+}
+
+.subtitle{
+text-align:center;
+color:#6b7280;
+margin-bottom:30px;
+}
+
+.navbar{
+display:flex;
+justify-content:center;
+gap:10px;
+margin-bottom:25px;
+flex-wrap:wrap;
+}
+
+.navbtn{
+background:#2c7be5;
+color:white;
+padding:10px 18px;
+border-radius:6px;
+border:none;
+cursor:pointer;
+font-weight:600;
+font-size:14px;
+box-shadow:0 2px 6px rgba(0,0,0,.15);
+transition:.2s;
+}
+
+.navbtn:hover{
+background:#1a5fc2;
+}
+
+.controls{
+display:flex;
+justify-content:center;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:30px;
+}
+
+.search{
+padding:10px 14px;
+font-size:15px;
+border-radius:6px;
+border:1px solid #d1d5db;
+width:260px;
+}
+
+.favbtn{
+background:#111827;
+color:white;
+border:none;
+padding:10px 16px;
+border-radius:6px;
+font-weight:600;
+cursor:pointer;
+}
+
+.favbtn:hover{
+background:#374151;
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+gap:24px;
+}
+
+.card{
+background:white;
+border-radius:12px;
+padding:12px;
+box-shadow:0 6px 14px rgba(0,0,0,.12);
+transition:.25s;
+text-align:center;
+position:relative;
+}
+
+.card:hover{
+transform:translateY(-6px);
+box-shadow:0 12px 24px rgba(0,0,0,.18);
+}
+
+.card img{
+width:200px;
+height:350px;
+object-fit:cover;
+border-radius:8px;
+cursor:pointer;
+}
+
+.label{
+margin-top:8px;
+font-weight:600;
+font-size:14px;
+}
+
+.star{
+position:absolute;
+top:10px;
+right:12px;
+font-size:22px;
+cursor:pointer;
+color:#d1d5db;
+transition:.2s;
+}
+
+.star.active{
+color:#fbbf24;
+}
+
+.star:hover{
+transform:scale(1.2);
+}
+
+/* TRACKMAN */
+/* Center TrackMan content */
+.trackman-section {
+    max-width: 1000px;
+    margin: auto;
+    display: flex;
+    flex-direction: column; /* stack Notes above table */
+    align-items: center; /* center horizontally */
+}
+
+/* Make cards full width but table inside smaller and centered */
+.tm-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 6px 14px rgba(0,0,0,.12);
+    width: 100%;
+    max-width: 800px; /* optional: make cards narrower than section */
+    box-sizing: border-box;
+}
+
+.tm-table {
+    width: 100%;
+    max-width: 750px; /* restrict table width */
+    margin: 0 auto; /* center horizontally */
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>My Golf Page</h1>
+<div class="navbar">
+<button class="navbtn" onclick="filterCategory('drills')">Drills</button>
+<button class="navbtn" onclick="filterCategory('office')">Office</button>
+<button class="navbtn" onclick="filterCategory('simulator')">Simulator</button>
+<button class="navbtn" onclick="filterCategory('stretching')">Stretching</button>
+<button class="navbtn" onclick="showTrackman()">TrackMan</button>
+<button class="navbtn" onclick="filterCategory('putting')">Putting</button>
+<button class="navbtn" onclick="showCheatSheet()">Cheat Sheets</button>
+</div>
+
+<div class="controls">
+<input id="search" class="search" placeholder="Search drills...">
+<button class="favbtn" onclick="showFavorites()">Favorites</button>
+</div>
+
+<div id="grid" class="grid"></div>
+
+</div>
+
+<script>
+
+const drills=[
+
+/* ---------------- DRILLS ---------------- */
+
+{img:"GripDrill",label:"Grip Test",url:"https://youtube.com/shorts/FXCRiwjWSws",category:"drills"},
+{img:"GripAnalysis",label:"Grip Analysis",url:"https://www.facebook.com/share/r/15t9f6Hbrt/",category:"drills"},
+{img:"HeadStill",label:"Keep Head Still Drill",url:"https://www.facebook.com/share/r/1H16ixiqbd/",category:"drills"},
+{img:"WeightShift",label:"Weight Shift",url:"https://www.facebook.com/share/r/1BWfWbr27A/",category:"drills"},
+{img:"ImpactLine",label:"Impact Line",url:"https://www.facebook.com/share/r/19rd2YxiLU/",category:"drills"},
+{img:"DoorframeDriver",label:"Doorframe Driver",url:"https://www.facebook.com/share/r/1CfVicRhRt/",category:"drills"},
+{img:"StepIntoIt",label:"Step Into It",url:"https://www.facebook.com/share/r/18UrLqCUyJ/",category:"drills"},
+{img:"SwingStepDrill",label:"Swing Step Drill",url:"https://www.facebook.com/share/v/1KoLfqLa2s/",category:"drills"},
+{img:"CompressionStepDrill",label:"Compression Step Drill",url:"https://www.facebook.com/share/r/1BN5YzNKsZ/",category:"drills"},
+{img:"SlowDown",label:"Slow Down Swing Drill",url:"https://youtube.com/shorts/o72qLYgj8ug",category:"drills"},
+{img:"SquashBug",label:"Squash The Bug",url:"https://www.facebook.com/reel/1878055812806888",category:"drills"},
+{img:"EarlyExtension",label:"Early Extension",url:"https://www.facebook.com/share/v/1ACeAhSnUg/",category:"drills"},
+{img:"IronDrill",label:"Iron Drill",url:"https://www.instagram.com/reel/DHjqiGmThjw/?igsh=aDFhNjFmYTZsYnJ5",category:"drills"},
+{img:"Hands",label:"Hands",url:"https://youtube.com/shorts/pBSMU1Og2Hc",category:"drills"},
+{img:"ShallowClubStick",label:"Shallow Club (Stick)",url:"https://www.facebook.com/share/r/16E2uBwfRm/",category:"drills"},
+{img:"OverTheTopStick",label:"Over The Top (Stick)",url:"https://www.facebook.com/share/r/1XWTD8CxPK/",category:"drills"},
+{img:"3DrillsStick",label:"3 Drills (Stick)",url:"https://www.facebook.com/share/r/1AcLW4fm6i/",category:"drills"},
+{img:"StrikeDrillSticks",label:"Strike Drill (Sticks)",url:"https://www.facebook.com/share/r/1AGcZTJAhv/",category:"drills"},
+{img:"WedgeDrillSticks",label:"Wedge Drill (Sticks)",url:"https://www.facebook.com/share/r/12LNrHuHebu/",category:"drills"},
+{img:"OneHandSwing",label:"One Hand Swing",url:"https://youtube.com/shorts/ircfhXoBUrg",category:"drills"},
+{img:"GeneratePower",label:"Generate Power Drill",url:"https://youtube.com/shorts/lKmhCgld1W0",category:"drills"},
+{img:"DropArms",label:"Drop Arms",url:"https://www.facebook.com/share/r/16JUHTPiGX/",category:"drills"},
+{img:"DropArmsElbow",label:"Drop Arms Elbow",url:"https://youtube.com/shorts/QG0zJUPg2QI",category:"drills"},
+{img:"TowelDrill",label:"Towel Drill",url:"https://www.instagram.com/reel/DJUD6arzaub/",category:"drills"},
+{img:"LtoLDrill",label:"L to L Drill",url:"https://www.facebook.com/share/r/19xXuvJdbT/",category:"drills"},
+{img:"SequencingDrill",label:"Sequencing Drill",url:"https://www.facebook.com/share/r/1ACeph1XQ4/",category:"drills"},
+{img:"LateRelease",label:"Late Release Drill",url:"https://www.facebook.com/share/r/1FzNkygS8G/",category:"drills"},
+{img:"FollowThrough",label:"Follow Through",url:"https://www.facebook.com/share/r/17BksoZLXn/",category:"drills"},
+{img:"RightElbow",label:"Right Elbow",url:"https://www.facebook.com/share/r/15tGy4fr19/",category:"drills"},
+{img:"PunchShotDrill",label:"Punch Shot Drill",url:"https://www.facebook.com/share/v/16JZFy9RU6/",category:"drills"},
+{img:"ChickenWing",label:"Chicken Wing",url:"https://www.facebook.com/share/r/17uamcRn4T/",category:"drills"},
+{img:"KneeDrill",label:"Knee Drill",url:"https://www.facebook.com/share/r/16PbvKP9GT/",category:"drills"},
+{img:"HingeClub",label:"Hinge Club",url:"https://www.facebook.com/share/r/1846ropedK/",category:"drills"},
+{img:"CompressionBallAhead",label:"Compression Ball Ahead Drill And 2 Others",url:"https://youtu.be/RTqa5CPu5Xo?t=208",category:"drills"},
+{img:"ChalkLine",label:"Hit The Chalk Line After The Ball",url:"https://www.facebook.com/share/r/1AF49LRv5s/",category:"drills"},
+{img:"GloveUnderBicep",label:"Glove Under Bicep Drill",url:"https://www.facebook.com/share/r/16Bhj96g4v/",category:"drills"},
+{img:"CoinDrill",label:"Coin Drill",url:"https://www.facebook.com/share/r/19MbtqAXMn/",category:"drills"},
+{img:"SqueezeElbows",label:"Squeeze Elbows",url:"https://www.facebook.com/share/r/1CVTfQwiAG/",category:"drills"},
+{img:"StepStretch",label:"Step & Stretch",url:"https://www.facebook.com/share/r/1AsX6MFiHM/",category:"drills"},
+{img:"SwingThoughts",label:"Swing Thoughts For Knee",url:"https://www.facebook.com/share/r/17A17TxKa2/",category:"drills"},
+{img:"CompressionLoadFoot",label:"Compression Load Foot",url:"https://www.facebook.com/share/r/18CNtqXDmu/",category:"drills"},
+{img:"WeightShift2",label:"Weight Shift",url:"https://www.facebook.com/share/r/16qGJYwMzZ/",category:"drills"},
+{img:"ShourldersStick",label:"Shoulders (Stick)",url:"https://www.facebook.com/share/r/1BfbG992GG/",category:"drills"},
+{img:"StickBeltLoops",label:"Stick In Belt Loops Timing Drill",url:"https://youtube.com/shorts/rs3F2hvJuFc",category:"drills"},
+{img:"CompressionFeelsLike",label:"Compression Feels Like",url:"https://youtube.com/shorts/J6DSw7Z-fQs",category:"drills"},
+{img:"CoinsDrill",label:"Coins drill",url:"https://www.facebook.com/share/r/184eAaBe4P/",category:"drills"},
+{img:"SplitGripDrill",label:"Split Hand Drill",url:"https://www.facebook.com/share/r/17KawAj72Y/",category:"drills"},
+{img:"CompressionShaftLean",label:"Compression Excess Shaft Lean",url:"https://www.facebook.com/share/v/1WnpegqmGH/",category:"drills"},
+{img:"BoxDrill",label:"Box Drill",url:"https://www.facebook.com/share/r/1Bmgg7Arvf/",category:"drills"},
+{img:"TurnDrill",label:"Proper Drill For Turn",url:"https://youtube.com/shorts/U1-m57iu1_E?si=dnJ0LUK1o7pymo3F",category:"drills"},
+{img:"StopThinning",label:"Stop Thinning Irons",url:"https://youtube.com/shorts/6XsDX8TRCHA?si=RDQr6tjYcP7mf5Z-",category:"drills"},
+{img:"ChipSetup",label:"Chipping Set Up",url:"https://www.facebook.com/share/r/1FgaNsHMZw/",category:"drills"},
+
+
+/* ---------------- OFFICE ---------------- */
+
+{img:"LeftKnee",label:"Left Knee",url:"https://youtube.com/shorts/q17LA-BlIrE",category:"office"},
+{img:"RotationOffice",label:"Rotation Drill",url:"https://youtube.com/shorts/9BjYi4fHB9Y",category:"office"},
+{img:"SwayFix",label:"Sway Fix",url:"https://www.facebook.com/share/r/1LjfWo8PER/",category:"office"},
+{img:"ShallowingExercises",label:"Shallowing",url:"https://www.facebook.com/share/r/1CeA2a6T5y/",category:"office"},
+{img:"BackswingOffice",label:"Backswing",url:"https://www.facebook.com/share/r/17Fpxu57XX/",category:"office"},
+{img:"BackswingPosture",label:"Backswing",url:"https://www.facebook.com/share/r/179sBZc4U2/",category:"office"},
+{img:"BackswingWall",label:"Backswing",url:"https://www.facebook.com/share/r/14DzAbzTQQQ/",category:"office"},
+{img:"HipMovement",label:"Hip Movement",url:"https://www.facebook.com/share/r/1DpA9WH1EK/",category:"office"},
+{img:"PivotDrill",label:"Pivot Drill",url:"https://www.facebook.com/share/r/1Bs7Hz8B9S/",category:"office"},
+{img:"HeadOnWall",label:"Head On Wall",url:"https://www.facebook.com/share/r/19nQ8q3FtQ/",category:"office"},
+{img:"LeaningDrill",label:"Leaning Drill",url:"https://www.facebook.com/share/r/1GEe8VFekf/",category:"office"},
+{img:"RightArmOffice",label:"Right Arm Drill",url:"https://www.facebook.com/share/r/1BZn76taeq/",category:"office"},
+{img:"DownswingFeels",label:"Downswing Feels",url:"https://www.facebook.com/share/r/1a1XxK1S5X/",category:"office"},
+{img:"SwayDrillOffice",label:"Sway Drill",url:"https://www.facebook.com/share/r/1DEFXsiXGY/",category:"office"},
+{img:"CompressionOffice",label:"Compression Drill",url:"https://www.facebook.com/share/r/1KRRonHu2r/",category:"office"},
+
+/* ---------------- STRETCHING ---------------- */
+
+{img:"ShoulderInjury",label:"Shoulder Injury",url:"https://www.facebook.com/share/r/1BifyXN4MN/",category:"stretching"},
+{img:"HipStretching",label:"Hips",url:"https://www.facebook.com/share/r/17oRo2jBv8/",category:"stretching"},
+{img:"GolfStretching3",label:"Golf Stretching 3 Stretches",url:"https://www.facebook.com/share/r/18WVcACbnN/",category:"stretching"},
+{img:"GolfStretching10",label:"Golf Stretching 10 Minutes",url:"https://www.facebook.com/reel/3847933995513489",category:"stretching"},
+{img:"BackStretching",label:"Back Stretching",url:"https://www.facebook.com/share/r/1BMLcSx3di/",category:"stretching"},
+{img:"ShoulderStretching",label:"Shoulders Stretching",url:"https://www.facebook.com/share/r/15MLkySBsb/",category:"stretching"},
+{img:"ElbowsForearms",label:"Elbows & Forearms Stretching",url:"https://www.facebook.com/share/r/1BjRCV1iaL/",category:"stretching"},
+{img:"FullBody",label:"Full Body Stretching",url:"https://www.facebook.com/reel/1422332818882057",category:"stretching"},
+{img:"TrapsStretching",label:"Traps Stretching",url:"https://youtube.com/shorts/uNM9bQi2LW4",category:"stretching"},
+{img:"NeckStretching",label:"Neck Stretching",url:"https://youtube.com/shorts/VX8KKWT_lCc",category:"stretching"},
+{img:"ShoulderBlades",label:"Shoulder Blade Stretching",url:"https://youtube.com/shorts/77Nqb7b-Ck4",category:"stretching"},
+{img:"ShoulderMobility",label:"Shoulder Stretching",url:"https://www.facebook.com/share/r/1DKRqDPk6A/",category:"stretching"},
+{img:"HipFlexibility",label:"Hip Flexibility",url:"https://youtube.com/shorts/nKhxWxKVzf4",category:"stretching"},
+{img:"ShouldersStick",label:"Shoulder Stretching",url:"https://www.facebook.com/share/r/18qGUCXxJC/",category:"stretching"},
+{img:"FrozenShoulder",label:"Frozen Shoulder Stretching",url:"https://www.facebook.com/share/r/14MX52stEma/",category:"stretching"},
+{img:"LowerBack",label:"Lower Back Stretch",url:"https://www.facebook.com/share/r/183Bm53PmJ/",category:"stretching"},
+{img:"EarlyExtensionStretch",label:"Early Extension Stretch",url:"https://www.facebook.com/share/r/15d9xqGnKsG/",category:"stretching"},
+{img:"RCTennis",label:"Rotator Cuff Tennis Ball",url:"https://www.facebook.com/share/r/1DdBS6HQ8Y/",category:"stretching"},
+{img:"ShoulderKnot",label:"Shoulder Knot",url:"https://www.facebook.com/share/r/1CtdWM5amD/",category:"stretching"},
+
+/* ---------------- SIMULATOR ---------------- */
+    
+{img:"ClubBelly",label:"Club Belly",url:"https://www.facebook.com/share/v/1HVXLgCdnw/",category:"simulator"},
+{img:"HitDraw",label:"Hitting A Draw",url:"https://youtube.com/shorts/lhfm9B59EcU?si=XpEPJjBITdxJ_qLL",category:"simulator"},
+{img:"FastBackswing",label:"Faster Backswing Driver",url:"https://youtube.com/shorts/ZgZDtO-UOXQ?si=8kTbpRHX5Kk-tszS",category:"simulator"},
+{img:"LeftShoulder",label:"Left shoulder first",url:"https://youtube.com/shorts/M49sol2FGkk?si=6-b2cU_7eceG75nr",category:"simulator"},
+{img:"SlicingFix",label:"Slicing Fix",url:"https://www.facebook.com/share/r/1C8SYRyoM8/",category:"simulator"},
+{img:"LeadSideChipping",label:"Lead Side Chipping",url:"https://www.facebook.com/share/r/1GFeJ18fbY/",category:"simulator"},
+{img:"Chipping",label:"Chipping",url:"https://www.facebook.com/share/r/1H6x7cumoa/",category:"simulator"},
+{img:"ChipLowSwing",label:"Chipping Wide Low Swing",url:"https://www.facebook.com/share/v/1AHvUxpEUk/",category:"simulator"},
+{img:"SpinningWedges",label:"Spinning Wedges",url:"https://www.facebook.com/share/r/15RXF9E82s/",category:"simulator"},
+{img:"ExtremeCompression",label:"Extreme Compression",url:"https://www.facebook.com/share/r/1DJsKqsaEC/",category:"simulator"},
+{img:"Release",label:"Release Explained",url:"https://www.facebook.com/share/r/1769dTPdAJ/",category:"simulator"},
+{img:"Release2",label:"Release Explained Another Way",url:"https://www.facebook.com/share/r/1E8qvrEE6M/",category:"simulator"},
+{img:"ProperBackswing",label:"Proper Backswing Drill",url:"https://www.facebook.com/share/r/1L9P13BTs1/",category:"simulator"},
+
+/* ---------------- PUTTING ---------------- */
+
+{img:"PutterGrip",label:"Putter Grip",url:"https://youtube.com/shorts/1Shb_G63Qjs?si=9sDdlV_VMnOOCzC2",category:"putting"},
+{img:"MikePutting",label:"Putting With Mike",url:"https://youtu.be/BHu53GYM42o?si=PCAVqByi47oh-fWp",category:"putting"},    
+
+];
+
+let favorites=JSON.parse(localStorage.getItem("favDrills")||"[]");
+let currentCategory="drills";
+
+const grid=document.getElementById("grid");
+
+function draw(list){
+
+grid.innerHTML="";
+
+list.forEach(d=>{
+
+const card=document.createElement("div");
+card.className="card";
+
+const star=document.createElement("div");
+star.className="star";
+star.innerHTML="★";
+
+if(favorites.includes(d.img)) star.classList.add("active");
+
+star.onclick=()=>toggleFav(d.img,star);
+
+card.innerHTML+=`
+<a href="${d.url}" target="_blank">
+<img src="images/${d.img}.png">
+</a>
+<div class="label">${d.label}</div>
+`;
+
+card.appendChild(star);
+grid.appendChild(card);
+
+});
+
+}
+
+function toggleFav(name,star){
+
+if(favorites.includes(name)){
+
+favorites=favorites.filter(f=>f!==name);
+star.classList.remove("active");
+
+}else{
+
+favorites.push(name);
+star.classList.add("active");
+
+}
+
+localStorage.setItem("favDrills",JSON.stringify(favorites));
+
+}
+
+function filterCategory(cat){
+    currentCategory = cat;
+
+    // make sure grid layout is restored
+    grid.classList.add("grid");
+
+    const filtered = drills.filter(d => d.category === cat);
+    draw(filtered);
+}
+
+document.getElementById("search").addEventListener("input",function(){
+
+const term=this.value.toLowerCase();
+
+const filtered=drills.filter(d=>
+d.category===currentCategory &&
+d.label.toLowerCase().includes(term)
+);
+
+draw(filtered);
+
+});
+
+function showFavorites(){
+
+const fav=drills.filter(d=>favorites.includes(d.img));
+
+draw(fav);
+
+}
+
+filterCategory("drills");
+
+
+function showTrackman(){
+    const grid = document.getElementById("grid");
+    // Remove the 'grid' class so it doesn't apply the side-by-side layout
+    grid.classList.remove("grid");
+
+    grid.innerHTML = `
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Trackman Settings</u></b></div>
+            <br>
+            <div class="tm-sub">Click the 3 lines at the right end of the tiles that are currently listed and then choose what to add and remove</div>
+            <br>
+            <div class="tm-sub">Carry, Total, Club Speed, Ball Speed, Spin Rate, Spin Axis, Smash Factor, Attack Angle, Club Path, Face To Path, Launch Angle, Low Point Distance, Height</div>
+            <br>
+            <div class="tm-sub"><a href="https://support.trackmangolf.com/hc/en-us/articles/12985883274139-Shot-Analysis-How-To-Export-A-CSV-File-From-TPS" target="_blank">Export Trackman Stats To CSV - Send Videos Also</a></div>
+            <br>
+            <div class="placeholder">
+            <b>Club Path</b> is direction club was traveling in relation to the target line, measured at impact - Right of line is positive and Left is negative
+            <br>
+            - Get it closer to zero to fix hooks and slices but want to aim for between negative 4.5 and positive 4.5
+            </div>
+            <br>
+            <div class="placeholder">
+            <b>Face Angle</b> - where the club face was angled at impact - Closed is negative and open is positive (Left is opposite)
+            <br>
+            - This has a 75% influence on the starting direction of the golf ball
+            <br>
+            - Where the ball starts is controlled by your Face Angle            
+            </div>
+            <br>
+            <div class="placeholder">
+            <b>Face To Path</b> Is the difference between Face Angle and Club Path - Negative is right to left, Positive is left to right
+            <br>
+            - Difference between Club Path and Face Angle
+            <br>
+            - Negative is right to left (Lefty or Righty) - So Club Path is going to the right and Face Angle is pointed left
+            <br>
+            - Positive is left to right (Lefty or Righty) - So Club Path is going to the left and Face Angle is pointed right
+            <br>
+            - The greater the difference, the greater the curve
+            <br>
+            - Heel and toe strikes throw all of this out of whack because this is all based on center of the face strikes (called gear effects)     
+            </div>
+            <br>
+            <div class="placeholder"><b>Spin Axis</b> is the tilt of the golf ball - Negative is a tilt to the left and positive is a tilt to the right (same for left and right handed)</div>
+            <br>
+            <div class="placeholder">
+            <b>Smash Factor</b> - Ball speed divided by Club head speed - 1.50 is perfect or 1.5x your Club Head speed
+            <br>
+            - You want 1.47 - 1.50
+            <br>
+            - Striking it outside of the center of the face or with say a wide open face will lower this
+            </div>
+            <br>
+            <div class="placeholder">
+            <b>Spin Rate (Driver)</b> - 2200 - 2800
+            <br>
+            - For irons you usually want 1,000 less than the club so a 7 iron has a target of 6,000
+            </div>
+            <br>
+            <div class="placeholder">
+            <b>Dynamic Loft (Driver)</b> - How much the face is open so want it no more than 15 - The more open the more loft and more spin</div>
+            <br>
+            <div class="placeholder">Add notes here</div>
+            <br>
+            <div class="placeholder">Add notes here</div>
+        </div>
+
+        <div class="tm-card">
+            <div class="tm-title"><Center><b><u>Pro Averages</u></b></center></div>
+            <br>
+            <table class="tm-table">
+                <tr>
+                    <th>Club</th>
+                    <th>Club Speed</th>
+                    <th>Ball Speed</th>
+                    <th>Attack</th>
+                    <th>Path</th>
+                    <th>Spin</th>
+                    <th>Carry</th>
+                    <th>Apex</th>
+                </tr>
+                <tr><td>Driver</td><td>113-115</td><td>170-172</td><td>+3 to +5</td><td>±2</td><td>2500</td><td>280</td><td>95ft</td></tr>
+                <tr><td>3 Wood</td><td>108-110</td><td>160-163</td><td>+1</td><td>±2</td><td>3600</td><td>245</td><td>90ft</td></tr>
+                <tr><td>5 Wood</td><td>104-106</td><td>155-158</td><td>+1</td><td>±2</td><td>4300</td><td>235</td><td>95ft</td></tr>
+                <tr><td>Hybrid</td><td>100</td><td>149</td><td>-2</td><td>±2</td><td>4400</td><td>228</td><td>95ft</td></tr>
+                <tr><td>4 Iron</td><td>97</td><td>139</td><td>-4</td><td>±2</td><td>4800</td><td>205</td><td>88ft</td></tr>
+                <tr><td>5 Iron</td><td>95</td><td>134</td><td>-4</td><td>±2</td><td>5300</td><td>197</td><td>85ft</td></tr>
+                <tr><td>6 Iron</td><td>93</td><td>129</td><td>-5</td><td>±2</td><td>6200</td><td>185</td><td>83ft</td></tr>
+                <tr><td>7 Iron</td><td>91</td><td>123</td><td>-5</td><td>±2</td><td>7100</td><td>174</td><td>80ft</td></tr>
+                <tr><td>8 Iron</td><td>88</td><td>117</td><td>-6</td><td>±2</td><td>8000</td><td>162</td><td>78ft</td></tr>
+                <tr><td>9 Iron</td><td>86</td><td>111</td><td>-7</td><td>±2</td><td>8600</td><td>150</td><td>75ft</td></tr>
+                <tr><td>PW</td><td>84</td><td>104</td><td>-8</td><td>±2</td><td>9300</td><td>138</td><td>70ft</td></tr>
+                <tr><td>GW</td><td>80</td><td>98</td><td>-8</td><td>±2</td><td>10000</td><td>125</td><td>68ft</td></tr>
+                <tr><td>SW</td><td>75</td><td>92</td><td>-9</td><td>±2</td><td>10500</td><td>110</td><td>65ft</td></tr>
+                <tr><td>LW</td><td>70</td><td>85</td><td>-10</td><td>±2</td><td>11000</td><td>90</td><td>60ft</td></tr>
+            </table>
+        </div>
+    </div>
+    `;
+}
+
+function showCheatSheet(){
+    const grid = document.getElementById("grid");
+
+    // remove grid layout so it behaves like TrackMan
+    grid.classList.remove("grid");
+
+    grid.innerHTML = `
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Bounce</u></b></div>
+            <div class="placeholder">- As you open the face, you get more bounce</div>
+            <div class="placeholder">- Less bounce is better for firmer conditions</div>
+            <div class="placeholder">- More bounce is better for softer conditions</div>
+            <div class="placeholder">- The more bounce you have the higher the blade is so if you are hitting off concrete, you'll blade more chips</div>
+            <div class="placeholder">- If you have no bounce and hit into soft ground, the blade will dig into the ground before the ball - have to hit the ball first</div>
+        </div>
+
+    </div>
+
+<div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Wind</u></b></div>
+            <div class="placeholder">- Drop grass and see where the wind blows it</div>
+            <div class="placeholder">- Wind behind you, take 2 yards off shot for each yard paced off between you and where grass landed</div>
+            <div class="placeholder">- Wind in face, 3 yards added to distance for each yard it blows away</div>
+            <div class="placeholder">- Hitting from an elevated position increases wind by 50% because ball is in the air longer - 10 yard wind becomes 15 yards into wind or with wind</div>
+        </div>
+
+    </div>
+
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Cheat Sheet Notes 3</u></b></div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+
+        </div>
+
+    </div>
+
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Cheat Sheet Notes 4</u></b></div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+
+        </div>
+
+    </div>
+
+    <div class="trackman-section">
+        <div class="tm-card">
+            <div class="tm-title"><b><u>Cheat Sheet Notes 5</u></b></div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+            <br>
+
+            <div class="placeholder">Add notes here</div>
+
+        </div>
+
+    </div>
+
+
+    
+
+    
+    `;
+}
+</script>
+
+</body>
+</html>
