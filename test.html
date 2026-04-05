@@ -492,7 +492,7 @@ function filterCategory(cat){
     const filtered = drills.filter(d => d.category === cat);
     draw(filtered);
 
-    setPageText("This is the " + cat + " section. Add your notes here.");
+    setPageText(pageNotes[cat] || "");
 }  
 
 document.getElementById("search").addEventListener("input",function(){
