@@ -261,7 +261,7 @@ transform:scale(1.2);
 
 function openModal(drill){
   document.getElementById("modalTitle").innerText = drill.label;
-  document.getElementById("modalText").innerText = drill.note || "";
+  document.getElementById("modalText").innerText = drill.note || "No notes";
   document.getElementById("noteModal").style.display="flex";
 }
 
