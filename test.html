@@ -482,10 +482,12 @@ function filterCategory(cat){
 
     // make sure grid layout is restored
     grid.classList.add("grid");
-
+  
     const filtered = drills.filter(d => d.category === cat);
     draw(filtered);
-}
+
+    setPageText("This is the " + cat + " section. Add your notes here.");
+}  
 
 document.getElementById("search").addEventListener("input",function(){
 
