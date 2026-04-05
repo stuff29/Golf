@@ -198,6 +198,11 @@ transform:scale(1.2);
   margin:10px 0;
   white-space:pre-wrap;
 }
+
+#modalText{
+  margin:10px 0;
+  white-space:pre-wrap;
+}  
     
 /* TRACKMAN */
 /* Center TrackMan content */
@@ -258,6 +263,10 @@ transform:scale(1.2);
 
 <script>
 
+note:`• Keep pressure in pinky
+• Feel it in fingers not palm
+• Left thumb slightly right`
+  
 function openModal(drill){
   document.getElementById("modalTitle").innerText = drill.label;
   document.getElementById("modalText").innerText = drill.note || "";
