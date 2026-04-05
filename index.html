@@ -139,6 +139,85 @@ color:#fbbf24;
 transform:scale(1.2);
 }
 
+.img-wrap{
+  position:relative;
+}
+
+/* Yellow dot */
+.note-dot{
+  position:absolute;
+  top:8px;
+  left:8px;
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  background:#fbbf24;
+  cursor:pointer;
+}
+
+/* Note icon */
+.note-icon{
+  position:absolute;
+  top:6px;
+  right:8px;
+  font-size:14px;
+  background:rgba(0,0,0,.6);
+  color:white;
+  padding:4px 6px;
+  border-radius:6px;
+  cursor:pointer;
+  opacity:0;
+  transition:.2s;
+}
+
+.img-wrap:hover .note-icon{
+  opacity:1;
+}
+
+.modal{
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.5);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content{
+  background:white;
+  padding:20px;
+  border-radius:12px;
+  width:90%;
+  max-width:400px;
+}
+
+#modalText{
+  margin:10px 0;
+}
+
+.page-text{
+  max-width: 800px;
+  margin: 30px auto 0;
+  text-align: center;
+  color: #374151;
+  font-size: 14px;
+  line-height: 1.6;
+}  
+
+.page-text{
+  background: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 14px rgba(0,0,0,.12);
+}  
+
+#pageText:empty {
+  display: none;
+}  
+
 /* TRACKMAN */
 /* Center TrackMan content */
 .trackman-section {
@@ -194,15 +273,79 @@ transform:scale(1.2);
 
 <div id="grid" class="grid"></div>
 
+<div id="pageText" class="page-text"></div>
+
 </div>
 
 <script>
 
+function openModal(drill){
+  document.getElementById("modalTitle").innerText = drill.label;
+  document.getElementById("modalText").innerText = drill.note || "No notes";
+  document.getElementById("noteModal").style.display="flex";
+}
+
+function closeModal(){
+  document.getElementById("noteModal").style.display="none";
+}
+
+function setPageText(html){
+  document.getElementById("pageText").innerHTML = html;
+}
+
+const pageNotes = {
+  drills: `
+    <p>This is your <b>Drills section</b>.</p>
+
+    <p>Focus on:</p>
+    <ul>
+      <li>Contact</li>
+      <li>Club path</li>
+      <li>Face control</li>
+    </ul>
+
+    <p><i>Tip:</i> Slow your swing down and exaggerate movements.</p>
+  `,
+
+  office: `
+    <p><b>Office Work</b> focuses on body mechanics.</p>
+
+    <ul>
+      <li>Posture</li>
+      <li>Rotation</li>
+      <li>Weight shift</li>
+    </ul>
+  `,
+
+  simulator: `
+    <p><b>Simulator Notes:</b></p>
+    <p>Work on start line and curve control.</p>
+  `,
+
+  stretching: `
+    <p><b>Stretching Notes:</b></p>
+    <p>Focus on mobility and consistency.</p>
+  `,
+
+  putting: `
+    <p><b>Putting Notes:</b></p>
+    <p>Focus on face control and distance control.</p>
+  `
+};
+  
 const drills=[
 
 /* ---------------- DRILLS ---------------- */
 
-{img:"GripDrill",label:"Grip Test",url:"https://youtube.com/shorts/FXCRiwjWSws",category:"drills"},
+{
+  img:"GripDrill",
+  label:"Grip Test",
+  url:"https://youtube.com/shorts/FXCRiwjWSws",
+  category:"drills",
+  note:`• Keep pressure in pinky
+• Feel it in fingers not palm
+• Left thumb slightly right`
+},
 {img:"GripAnalysis",label:"Grip Analysis",url:"https://www.facebook.com/share/r/15t9f6Hbrt/",category:"drills"},
 {img:"HeadStill",label:"Keep Head Still Drill",url:"https://www.facebook.com/share/r/1H16ixiqbd/",category:"drills"},
 {img:"WeightShift",label:"Weight Shift",url:"https://www.facebook.com/share/r/1BWfWbr27A/",category:"drills"},
@@ -342,11 +485,22 @@ if(favorites.includes(d.img)) star.classList.add("active");
 star.onclick=()=>toggleFav(d.img,star);
 
 card.innerHTML+=`
-<a href="${d.url}" target="_blank">
-<img src="images/${d.img}.png">
-</a>
-<div class="label">${d.label}</div>
-`;
+  <div class="img-wrap">
+    <a href="${d.url}" target="_blank">
+      <img src="images/${d.img}.png">
+    </a>
+
+    ${d.note ? `<div class="note-dot"></div>` : ""}
+    ${d.note ? `<div class="note-icon">📝</div>` : ""}
+  </div>
+
+  <div class="label">${d.label}</div>
+`;  
+
+if(d.note){
+  card.querySelector(".note-icon").onclick = () => openModal(d);
+  card.querySelector(".note-dot").onclick = () => openModal(d);
+}
 
 card.appendChild(star);
 grid.appendChild(card);
@@ -378,10 +532,12 @@ function filterCategory(cat){
 
     // make sure grid layout is restored
     grid.classList.add("grid");
-
+  
     const filtered = drills.filter(d => d.category === cat);
     draw(filtered);
-}
+
+    setPageText(pageNotes[cat] || "");
+}  
 
 document.getElementById("search").addEventListener("input",function(){
 
@@ -507,6 +663,9 @@ function showTrackman(){
         </div>
     </div>
     `;
+  
+setPageText("");  
+  
 }
 
 function showCheatSheet(){
@@ -613,8 +772,19 @@ function showCheatSheet(){
 
     
     `;
+
+setPageText("");
+
 }
 </script>
 
+<div id="noteModal" class="modal">
+  <div class="modal-content">
+    <h3 id="modalTitle"></h3>
+    <div id="modalText"></div>
+    <button onclick="closeModal()">Close</button>
+  </div>
+</div>
+    
 </body>
 </html>
